@@ -41,6 +41,7 @@ extern "C" void trapHandler(){
                 size_t size;
                 __asm__ volatile("mv %0, a1": "=r"(size));
                 MemoryAllocator::mem_alloc(size);
+                __putc('q');
                 break;}
             case MEM_FREE:
             {
@@ -143,8 +144,5 @@ void thread_dispatch(){
     abi_invoker(THREAD_DISPATCH);
 }
 
-void wrapperRun(void* p){
-    if(p == nullptr) return;
-    ((void(*)())(p))();
-}
+
 

@@ -21,7 +21,7 @@ MemoryAllocator *MemoryAllocator::getInstance() {
         fmem_head = (FreeMem*)0x81000000;
         fmem_head->next = nullptr;
         fmem_head->prev = nullptr;
-        fmem_head->size = (size_t) (0x88000000) -(size_t )0x80007000;
+        fmem_head->size = (size_t) (0x88000000) -(size_t )0x81000000;
 //        fmem_head = &(FreeMem(freeMemSize));
         memoryAllocator = (MemoryAllocator*)MemoryAllocator::mem_alloc((sizeof(MemoryAllocator)+MEM_BLOCK_SIZE-1)/MEM_BLOCK_SIZE);
     }

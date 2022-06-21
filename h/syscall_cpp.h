@@ -21,9 +21,12 @@ public:
 
     static void dispatch();
     static int sleep(time_t);
+
+    void* operator new(size_t);
+    friend void wrapperRun(void* p);
 protected:
     Thread();
-    virtual void run();
+    virtual void run(){};
 private:
     thread_t myHandle;
 };
