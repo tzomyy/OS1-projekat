@@ -1,0 +1,151 @@
+GAS LISTING /tmp/cclXap5p.s 			page 1
+
+
+   1              		.file	"riscv.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN5Riscv10popSppSpieEv
+   9              	_ZN5Riscv10popSppSpieEv:
+  10              	.LFB16:
+  11              		.file 1 "src/riscv.cpp"
+   1:src/riscv.cpp **** //
+   2:src/riscv.cpp **** // Created by os on 6/21/22.
+   3:src/riscv.cpp **** //
+   4:src/riscv.cpp **** 
+   5:src/riscv.cpp **** 
+   6:src/riscv.cpp **** #include "../h/riscv.h"
+   7:src/riscv.cpp **** //#include "../h/tcb.hpp"
+   8:src/riscv.cpp **** #include "../lib/console.h"
+   9:src/riscv.cpp **** 
+  10:src/riscv.cpp **** void Riscv::popSppSpie()
+  11:src/riscv.cpp **** {
+  12              		.loc 1 11 1
+  13              		.cfi_startproc
+  14 0000 130101FF 		addi	sp,sp,-16
+  15              		.cfi_def_cfa_offset 16
+  16 0004 23348100 		sd	s0,8(sp)
+  17              		.cfi_offset 8, -8
+  18 0008 13040101 		addi	s0,sp,16
+  19              		.cfi_def_cfa 8, 0
+  12:src/riscv.cpp ****     __asm__ volatile ("csrw sepc, ra");
+  20              		.loc 1 12 5
+  21              		.loc 1 12 39 is_stmt 0
+  22              	#APP
+  23              	# 12 "src/riscv.cpp" 1
+  13              	    __asm__ volatile ("sret");
+  24              		csrw sepc, ra
+  25              	# 0 "" 2
+  26              		.loc 1 13 5 is_stmt 1
+  27              		.loc 1 13 30 is_stmt 0
+  28              	# 13 "src/riscv.cpp" 1
+  14              	}
+  29              		sret
+  30              	# 0 "" 2
+  31              		.loc 1 14 1
+  32              	#NO_APP
+  33 0014 03348100 		ld	s0,8(sp)
+  34              		.cfi_restore 8
+  35              		.cfi_def_cfa 2, 16
+  36 0018 13010101 		addi	sp,sp,16
+  37              		.cfi_def_cfa_offset 0
+  38 001c 67800000 		jr	ra
+  39              		.cfi_endproc
+  40              	.LFE16:
+  42              	.Letext0:
+  43              		.file 2 "src/../h/../lib/hw.h"
+  44              		.file 3 "src/../h/riscv.h"
+GAS LISTING /tmp/cclXap5p.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 riscv.cpp
+     /tmp/cclXap5p.s:9      .text:0000000000000000 _ZN5Riscv10popSppSpieEv
+     /tmp/cclXap5p.s:13     .text:0000000000000000 .L0 
+     /tmp/cclXap5p.s:14     .text:0000000000000000 .L0 
+     /tmp/cclXap5p.s:15     .text:0000000000000004 .L0 
+     /tmp/cclXap5p.s:17     .text:0000000000000008 .L0 
+     /tmp/cclXap5p.s:19     .text:000000000000000c .L0 
+     /tmp/cclXap5p.s:21     .text:000000000000000c .L0 
+       src/riscv.cpp:12     .text:000000000000000c .L0 
+     /tmp/cclXap5p.s:27     .text:0000000000000010 .L0 
+       src/riscv.cpp:13     .text:0000000000000010 .L0 
+     /tmp/cclXap5p.s:33     .text:0000000000000014 .L0 
+     /tmp/cclXap5p.s:34     .text:0000000000000018 .L0 
+     /tmp/cclXap5p.s:35     .text:0000000000000018 .L0 
+     /tmp/cclXap5p.s:37     .text:000000000000001c .L0 
+     /tmp/cclXap5p.s:39     .text:0000000000000020 .L0 
+     /tmp/cclXap5p.s:45     .text:0000000000000020 .L0 
+     /tmp/cclXap5p.s:364    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/cclXap5p.s:691    .debug_str:00000000000001b8 .LASF53
+     /tmp/cclXap5p.s:705    .debug_str:00000000000002c5 .LASF54
+     /tmp/cclXap5p.s:721    .debug_str:000000000000034f .LASF55
+     /tmp/cclXap5p.s:5      .text:0000000000000000 .Ltext0
+     /tmp/cclXap5p.s:42     .text:0000000000000020 .Letext0
+     /tmp/cclXap5p.s:631    .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/cclXap5p.s:701    .debug_str:00000000000002b0 .LASF0
+     /tmp/cclXap5p.s:681    .debug_str:000000000000015c .LASF1
+     /tmp/cclXap5p.s:671    .debug_str:0000000000000119 .LASF2
+     /tmp/cclXap5p.s:649    .debug_str:0000000000000071 .LASF4
+     /tmp/cclXap5p.s:677    .debug_str:0000000000000142 .LASF3
+     /tmp/cclXap5p.s:637    .debug_str:0000000000000026 .LASF5
+     /tmp/cclXap5p.s:635    .debug_str:0000000000000013 .LASF6
+     /tmp/cclXap5p.s:665    .debug_str:00000000000000e4 .LASF7
+     /tmp/cclXap5p.s:715    .debug_str:0000000000000317 .LASF8
+     /tmp/cclXap5p.s:647    .debug_str:0000000000000063 .LASF9
+     /tmp/cclXap5p.s:749    .debug_str:000000000000042b .LASF10
+     /tmp/cclXap5p.s:669    .debug_str:000000000000010a .LASF11
+     /tmp/cclXap5p.s:743    .debug_str:0000000000000400 .LASF12
+     /tmp/cclXap5p.s:723    .debug_str:000000000000036c .LASF13
+     /tmp/cclXap5p.s:683    .debug_str:000000000000016f .LASF14
+     /tmp/cclXap5p.s:659    .debug_str:00000000000000ba .LASF15
+     /tmp/cclXap5p.s:719    .debug_str:0000000000000339 .LASF16
+     /tmp/cclXap5p.s:661    .debug_str:00000000000000d0 .LASF56
+     /tmp/cclXap5p.s:689    .debug_str:00000000000001ad .LASF17
+     /tmp/cclXap5p.s:733    .debug_str:00000000000003be .LASF19
+     /tmp/cclXap5p.s:663    .debug_str:00000000000000d6 .LASF18
+     /tmp/cclXap5p.s:653    .debug_str:000000000000008d .LASF20
+     /tmp/cclXap5p.s:725    .debug_str:000000000000037c .LASF21
+     /tmp/cclXap5p.s:685    .debug_str:000000000000017b .LASF22
+     /tmp/cclXap5p.s:693    .debug_str:000000000000027c .LASF23
+     /tmp/cclXap5p.s:639    .debug_str:000000000000002d .LASF25
+     /tmp/cclXap5p.s:695    .debug_str:0000000000000285 .LASF27
+     /tmp/cclXap5p.s:651    .debug_str:0000000000000078 .LASF29
+     /tmp/cclXap5p.s:707    .debug_str:00000000000002d3 .LASF24
+     /tmp/cclXap5p.s:675    .debug_str:000000000000012f .LASF26
+     /tmp/cclXap5p.s:657    .debug_str:00000000000000b3 .LASF28
+     /tmp/cclXap5p.s:667    .debug_str:00000000000000f7 .LASF30
+GAS LISTING /tmp/cclXap5p.s 			page 3
+
+
+     /tmp/cclXap5p.s:703    .debug_str:00000000000002bd .LASF31
+     /tmp/cclXap5p.s:729    .debug_str:000000000000039f .LASF32
+     /tmp/cclXap5p.s:679    .debug_str:0000000000000154 .LASF33
+     /tmp/cclXap5p.s:713    .debug_str:0000000000000303 .LASF34
+     /tmp/cclXap5p.s:735    .debug_str:00000000000003d6 .LASF35
+     /tmp/cclXap5p.s:643    .debug_str:0000000000000049 .LASF36
+     /tmp/cclXap5p.s:673    .debug_str:0000000000000127 .LASF37
+     /tmp/cclXap5p.s:745    .debug_str:0000000000000410 .LASF38
+     /tmp/cclXap5p.s:747    .debug_str:0000000000000424 .LASF39
+     /tmp/cclXap5p.s:633    .debug_str:0000000000000000 .LASF40
+     /tmp/cclXap5p.s:641    .debug_str:0000000000000042 .LASF41
+     /tmp/cclXap5p.s:709    .debug_str:00000000000002da .LASF42
+     /tmp/cclXap5p.s:741    .debug_str:00000000000003fa .LASF43
+     /tmp/cclXap5p.s:717    .debug_str:0000000000000327 .LASF44
+     /tmp/cclXap5p.s:645    .debug_str:000000000000005d .LASF45
+     /tmp/cclXap5p.s:739    .debug_str:00000000000003e8 .LASF46
+     /tmp/cclXap5p.s:731    .debug_str:00000000000003b3 .LASF47
+     /tmp/cclXap5p.s:699    .debug_str:0000000000000298 .LASF48
+     /tmp/cclXap5p.s:655    .debug_str:00000000000000a8 .LASF49
+     /tmp/cclXap5p.s:687    .debug_str:0000000000000195 .LASF50
+     /tmp/cclXap5p.s:697    .debug_str:000000000000028e .LASF51
+     /tmp/cclXap5p.s:711    .debug_str:00000000000002ed .LASF52
+     /tmp/cclXap5p.s:737    .debug_str:00000000000003de .LASF57
+     /tmp/cclXap5p.s:727    .debug_str:0000000000000389 .LASF58
+     /tmp/cclXap5p.s:10     .text:0000000000000000 .LFB16
+     /tmp/cclXap5p.s:40     .text:0000000000000020 .LFE16
+     /tmp/cclXap5p.s:46     .debug_info:0000000000000000 .Ldebug_info0
+
+NO UNDEFINED SYMBOLS
