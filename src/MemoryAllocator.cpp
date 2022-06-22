@@ -18,10 +18,10 @@ const size_t freeMemSize = (size_t) (HEAP_END_ADDR) -(size_t )HEAP_START_ADDR;
 MemoryAllocator *MemoryAllocator::getInstance() {
 
     if (memoryAllocator == nullptr) {
-        fmem_head = (FreeMem*)84000000;
+        fmem_head = (FreeMem*)HEAP_START_ADDR;
         fmem_head->next = nullptr;
         fmem_head->prev = nullptr;
-        fmem_head->size = (size_t)84000000 -(size_t )HEAP_START_ADDR;
+        fmem_head->size = (size_t)HEAP_END_ADDR -(size_t )HEAP_START_ADDR;
         memoryAllocator = (MemoryAllocator*)MemoryAllocator::mem_alloc((sizeof(MemoryAllocator)+MEM_BLOCK_SIZE-1)/MEM_BLOCK_SIZE);
     }
     return memoryAllocator;
