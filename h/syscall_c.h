@@ -25,7 +25,13 @@ int thread_exit();
 
 void thread_dispatch();
 
-void wrapperRun(void* p);
+void thread_create_only(thread_t* handle,
+                        void(*start_routine)(void*),
+                        void* arg);
+
+void thread_start(thread_t t);
+
+//void wrapperRun(void* p);
 
 
 #endif //OS_PROJEKAT_SYSCALL_C_H

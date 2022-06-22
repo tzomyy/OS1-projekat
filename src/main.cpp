@@ -47,17 +47,30 @@ void userMain(void *);
 
 int main(){
 
-    MemoryAllocator::getInstance();
+    /*MemoryAllocator::getInstance();
     __putc('c');
     thread_t thr[2];
     thread_create(&thr[0], nullptr, nullptr);
-    thread_create(&thr[1], userMain, nullptr);
+    thread_create(&thr[1], userMain, nullptr);*/
 
     //Riscv::w_stvec((uint64) &trap);
     //Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
-    _thread::running = thr[0];
-    _thread::yield();
+    _thread *threads[2];
+
+    threads[0] = _thread::createThread(nullptr, nullptr);
+    _thread::running = threads[0];
+
+    threads[1] = _thread::createThread(userMain, nullptr);
+
+    Riscv::w_stvec((uint64) &trap);
+    Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
+
+
+    while (!(threads[1]->isFinished()))
+    {
+        _thread::yield();
+    }
     return 0;
 }
 

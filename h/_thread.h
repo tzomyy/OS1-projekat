@@ -30,7 +30,7 @@ public:
 
     static int threadExit();
 
-    static _thread *createThread(_thread** handle, Body body, void* stack, void* arg);
+    static _thread *createThread(Body body, void* arg);
 
     static void yield();
 
@@ -40,18 +40,19 @@ public:
 
     static _thread *running;
 
-    /* protected:
-
-         friend void wrapperRun(Thread *p);*/
+    void* operator new(size_t);
+    void* operator new[](size_t);
+    void operator delete(void*);
+    void operator delete[](void*);
 
 private:
-    _thread(Body body, void* stck, void* arg, uint64 timeSlice) :
+    _thread(Body body, uint64 timeSlice, void* arg) :
             body(body),
-            stack((uint64*)stck),
+            stack(body != nullptr ? new uint64[STACK_SIZE] : nullptr),
             timeSlice(timeSlice),
             finished(false),
             arg(arg),
-            context({body != nullptr ? (uint64) body : 0,
+            context({(uint64) &threadWrapper,
                      stack != nullptr ? (uint64) &stack[STACK_SIZE] : 0
                     })
 

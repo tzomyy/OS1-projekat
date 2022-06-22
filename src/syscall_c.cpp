@@ -15,7 +15,9 @@ enum ABI_codes{
     MEM_FREE  = 0x02,
     THREAD_CREATE = 0x11,
     THREAD_EXIT = 0x12,
-    THREAD_DISPATCH = 0x13
+    THREAD_DISPATCH = 0x13,
+    THREAD_CREATE_ONLY = 0x14,
+    THREAD_START = 0x15
 };
 
 void abi_invoker(int serviceId, ... ){
@@ -31,6 +33,8 @@ extern "C" void trapHandler(){
         uint64 volatile sepc = 0;
         __asm__ volatile ("csrr %[sepc], sepc" : [sepc] "=r"(sepc));
         sepc +=4;
+
+        uint64 volatile status = Riscv::r_sstatus();
 
         size_t opCode;
         __asm__ volatile("mv %0, a0": "=r" (opCode));
@@ -54,17 +58,14 @@ extern "C" void trapHandler(){
                 __asm__ volatile("ld s1, 11*8(fp)");
                 __asm__ volatile("ld s2, 12*8(fp)");
                 __asm__ volatile("ld s3, 13*8(fp)");
-                __asm__ volatile("ld s4, 14*8(fp)");
                 thread_t* handle = nullptr;
                 __asm__ volatile("mv %0, s1": "=r"(handle));
                 _thread::Body body;
                 __asm__ volatile("mv %0, s2": "=r"(body));
                 void* arg;
                 __asm__ volatile("mv %0, s3": "=r"(arg));
-                void* stack;
-                __asm__ volatile("mv %0, s4": "=r"(stack));
 
-                _thread::createThread(handle, body, stack, arg);
+                *handle = _thread::createThread(body,arg);
                 (*handle)->start();
 
                 int ret = 0;
@@ -73,18 +74,50 @@ extern "C" void trapHandler(){
                 break;
             }
             case THREAD_EXIT:
+            {
                 _thread::threadExit();
-                break;
+                break;}
             case THREAD_DISPATCH:
+            {
                 _thread::dispatch();
                 break;
-            default:
-                uint64 volatile sstatus = Riscv::r_sstatus();
-                _thread::resetTimeSliceCounter();
-                _thread::dispatch();
-                Riscv::w_sstatus(sstatus);
+            }
+            case THREAD_CREATE_ONLY:{
+                __asm__ volatile("ld s1, 11*8(fp)");
+                __asm__ volatile("ld s2, 12*8(fp)");
+                __asm__ volatile("ld s3, 13*8(fp)");
+                thread_t* handle = nullptr;
+                __asm__ volatile("mv %0, s1": "=r"(handle));
+                _thread::Body body;
+                __asm__ volatile("mv %0, s2": "=r"(body));
+                void* arg;
+                __asm__ volatile("mv %0, s3": "=r"(arg));
+
+                *handle = _thread::createThread(body,arg);
+
+                int ret = 0;
+                if (!handle) {ret = -1;}
+                __asm__ volatile("mv %0, a0" : :"r"(ret));
+                break;}
+            case THREAD_START:{
+                thread_t handle = nullptr;
+                __asm__ volatile("mv %0, a1": "=r"(handle));
+
+                handle->start();
+                break;}
         }
         Riscv::w_sepc(sepc);
+        Riscv::w_sstatus(status);
+    } else if (scause == 0x8000000000000001UL)
+    {
+        Riscv::mc_sip(Riscv::SIP_SSIP);
+    } else if (scause == 0x8000000000000009UL)
+    {
+        // interrupt: yes; cause code: supervisor external interrupt (PLIC; could be keyboard)
+        console_handler();
+    } else
+    {
+        // unexpected trap cause
     }
 }
 
@@ -144,5 +177,21 @@ void thread_dispatch(){
     abi_invoker(THREAD_DISPATCH);
 }
 
+void thread_create_only(thread_t* handle,
+                        void(*start_routine)(void*),
+                        void* arg){
+    void * stack = MemoryAllocator::mem_alloc((DEFAULT_STACK_SIZE+MEM_BLOCK_SIZE-1+sizeof(MemoryAllocator::FullMem))/MEM_BLOCK_SIZE);
+    if (!stack) return ;
 
+    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+    abi_invoker(THREAD_CREATE_ONLY, handle, start_routine, arg, stack);
+
+    int ret;
+    __asm__ volatile("mv a0, %0": "=r"(ret));
+}
+
+void thread_start(thread_t handle){
+    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+    abi_invoker(THREAD_START, handle);
+}
 

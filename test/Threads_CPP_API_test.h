@@ -23,7 +23,7 @@ class WorkerA: public Thread {
     void workerBodyA(void* arg);
 public:
     WorkerA():Thread() {}
-
+    WorkerA(void(*p)(void*), void* a): Thread(p, a){}
     void run() override {
         workerBodyA(nullptr);
     }
@@ -69,6 +69,7 @@ void WorkerA::workerBodyA(void *arg) {
     }
     printString("A finished!\n");
     finishedA = true;
+    thread_dispatch();
 }
 
 void WorkerB::workerBodyB(void *arg) {
@@ -106,7 +107,7 @@ void WorkerC::workerBodyC(void *arg) {
         printString("C: i="); printInt(i); printString("\n");
     }
 
-    printString("A finished!\n");
+    printString("C finished!\n");
     finishedC = true;
     thread_dispatch();
 }
@@ -132,6 +133,12 @@ void WorkerD::workerBodyD(void* arg) {
     finishedD = true;
     thread_dispatch();
 }
+void body(void *p){
+    int i = 0;
+    for (; i < 13; i++) {
+        printString("D: i="); printInt(i); printString("\n");
+    }
+}
 
 
 void Threads_CPP_API_test() {
@@ -153,6 +160,7 @@ void Threads_CPP_API_test() {
         threads[i]->start();
     }
 
+    thread_exit();
     while (!(finishedA && finishedB && finishedC && finishedD)) {
         Thread::dispatch();
     }

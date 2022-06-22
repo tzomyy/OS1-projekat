@@ -9,6 +9,18 @@
 #include "../lib/hw.h"
 
 typedef  void (Thread::*ptrOnFun)();
+struct Wrapper {
+    ptrOnFun func;
+};
+
+void wrapperRun(void* p){
+    if(p == nullptr) return;
+    ((Thread*)p)->run();
+//    p = (char*)0x80001af8;
+//    ((void(*)())(p))();
+    //if(p == nullptr) return;
+
+}
 
 void* operator new(size_t size){
     void* p = mem_alloc(size);
@@ -38,6 +50,7 @@ Thread::~Thread() {
 }
 
 int Thread::start() {
+    thread_start(myHandle);
     return 0;
 }
 
@@ -57,20 +70,19 @@ Thread::Thread() {
 
     //void *ptr = static_cast<void *>(&Thread::run);
     //void *a = reinterpret_cast<void *&>(ptr);
-    auto ptr = &Thread::run;
-    void *a = reinterpret_cast<void*&>(ptr);
+    /*auto ptr = &Thread::run;
+    void *a = reinterpret_cast<void*&>(ptr);*/
+//    void *(Thread::*mfp)() = &(Thread::run);
+//    struct Wrapper my_wrapper = { this->run };
 
-    thread_create(&myHandle, &wrapperRun, a);
+   // this->run();
+    thread_create_only(&myHandle,wrapperRun,this);
 }
 
 
 void *Thread::operator new(size_t sz) {
-    return MemoryAllocator::mem_alloc(sz);
-}
-
-void wrapperRun(void* p){
-    p = (char*)0x80001af8;
-    ((void(*)())(p))();
-    //if(p == nullptr) return;
+    return MemoryAllocator::getInstance()->mem_alloc((sz+
+                                               sizeof(MemoryAllocator::FullMem)+ MEM_BLOCK_SIZE - 1) /MEM_BLOCK_SIZE);
 
 }
+

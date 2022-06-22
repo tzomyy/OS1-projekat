@@ -14,32 +14,36 @@ int _thread::threadExit(){
     return 0;
 }
 
-_thread *_thread::createThread(_thread** handle,Body body, void* stack, void* arg)
-{
-    _thread* ret = (_thread*)MemoryAllocator::mem_alloc((sizeof(_thread) + MEM_BLOCK_SIZE-1 + sizeof(MemoryAllocator::FullMem))/MEM_BLOCK_SIZE);
+_thread *_thread::createThread(Body body, void* arg){
+
+    _thread* ret = (_thread*)MemoryAllocator::getInstance()->mem_alloc((sizeof(_thread) + MEM_BLOCK_SIZE-1 + sizeof(MemoryAllocator::FullMem))/MEM_BLOCK_SIZE);
     if (ret == nullptr) return ret;
-    *handle = ret;
-    (*handle)->body = body;
-    (*handle)->stack = (uint64*)stack;
-    (*handle)->timeSlice = TIME_SLICE;
-    (*handle)->finished = false;
-    (*handle)->arg = arg;
-    (*handle)->context = {
-            body != nullptr ? (uint64) body : 0,
-            stack != nullptr ? (uint64) &(*handle)->stack[STACK_SIZE]: 0
+
+    ret->body = body;
+    ret->stack = static_cast<uint64 *>(body != nullptr ? _thread::operator new[](STACK_SIZE) : nullptr),
+    ret->timeSlice = TIME_SLICE;
+    ret->finished = false;
+    ret->arg = arg;
+    ret->context = {
+            (uint64) &threadWrapper,
+            ret->stack != nullptr ? (uint64) ret->stack[STACK_SIZE]: 0
     };
+
+    if(body != nullptr) {
+        Scheduler::put(ret);
+    }
     return ret;
 }
 
 void _thread::yield()
 {
-    //__asm__ volatile ("ecall");
 
     Riscv::pushRegisters();
 
     _thread::dispatch();
 
     Riscv::popRegisters();
+    //thread_dispatch();
 
 }
 
@@ -69,9 +73,22 @@ void _thread::threadWrapper()
     _thread::yield();
 }
 
-/*void wrapperRun(Thread *p) {
-    p->run();
-}*/
+void* _thread::operator new(size_t sz){
+    return MemoryAllocator::getInstance()->mem_alloc((sz+
+    sizeof(MemoryAllocator::FullMem)+ MEM_BLOCK_SIZE - 1) /MEM_BLOCK_SIZE);
+}
+
+void* _thread::operator new[](size_t sz){
+    return MemoryAllocator::getInstance()->mem_alloc((sz+
+                                               sizeof(MemoryAllocator::FullMem)+ MEM_BLOCK_SIZE - 1) /MEM_BLOCK_SIZE);
+}
+void _thread::operator delete(void* p){
+    MemoryAllocator::getInstance()->mem_free(p);
+}
+
+void _thread::operator delete[](void* p){
+    MemoryAllocator::getInstance()->mem_free(p);
+}
 
 
 
