@@ -26,7 +26,7 @@ _thread *_thread::createThread(Body body, void* arg){
     ret->arg = arg;
     ret->context = {
             (uint64) &threadWrapper,
-            ret->stack != nullptr ? (uint64) ret->stack[STACK_SIZE]: 0
+            ret->stack != nullptr ? (uint64) &(ret->stack[STACK_SIZE]): 0
     };
 
     if(body != nullptr) {
@@ -62,6 +62,7 @@ void _thread::dispatch()
 }
 
 void _thread::start() {
+    if (running == nullptr) running = this;
     if ( this->body != nullptr) {Scheduler::put(this);}
 }
 

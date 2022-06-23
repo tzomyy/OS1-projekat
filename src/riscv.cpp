@@ -10,6 +10,7 @@
 void Riscv::popSppSpie()
 {
     __asm__ volatile ("csrw sepc, ra");
+    ms_sstatus(SSTATUS_SPP);
     __asm__ volatile ("sret");
 }
 

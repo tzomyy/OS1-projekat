@@ -10,6 +10,8 @@
 #include "../h/_thread.h"
 #include "../lib/console.h"
 
+void userMain(void *);
+
 enum ABI_codes{
     MEM_ALLOC = 0x01,
     MEM_FREE  = 0x02,
@@ -29,7 +31,7 @@ extern "C" void trap();
 extern "C" void trapHandler(){
 
     uint64 scause = Riscv::r_scause();
-    if (scause == 0x0000000000000009UL) {
+    if (scause == 0x0000000000000008UL || scause == 0x0000000000000009UL) {
         uint64 volatile sepc = 0;
         __asm__ volatile ("csrr %[sepc], sepc" : [sepc] "=r"(sepc));
         sepc +=4;
@@ -44,8 +46,11 @@ extern "C" void trapHandler(){
             {
                 size_t size;
                 __asm__ volatile("mv %0, a1": "=r"(size));
-                MemoryAllocator::mem_alloc(size);
-                __putc('q');
+
+                void* ret = MemoryAllocator::getInstance()->mem_alloc(size);
+                __asm__ volatile("sd a0, 10*8(fp)");
+
+                __asm__ volatile("mv a0, %0" : : "r"(ret));
                 break;}
             case MEM_FREE:
             {
@@ -105,10 +110,20 @@ extern "C" void trapHandler(){
 
                 handle->start();
                 break;}
+            default:
+                __asm__ volatile("csrw sepc, %0" : : "r"(&userMain));
+                Riscv::mc_sstatus(Riscv::SSTATUS_SPP);
+                return;
+                //__asm__ volatile("sret");
         }
         Riscv::w_sepc(sepc);
         Riscv::w_sstatus(status);
-    } else if (scause == 0x8000000000000001UL)
+    } /*else if(scause == 0x0000000000000009UL){
+        __asm__ volatile("csrw sepc, %0" : : "r"(&userMain));
+        Riscv::mc_sstatus(Riscv::SSTATUS_SPP);
+        //__asm__ volatile("sret");
+    }*/
+    else if (scause == 0x8000000000000001UL)
     {
         Riscv::mc_sip(Riscv::SIP_SSIP);
     } else if (scause == 0x8000000000000009UL)
@@ -127,7 +142,7 @@ void* mem_alloc(size_t size){
     size_t numOfBlocks = (size+sizeof(MemoryAllocator::FullMem))/MEM_BLOCK_SIZE
                          + ((size+sizeof(MemoryAllocator::FullMem))%MEM_BLOCK_SIZE?1:0);
 
-    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+   // __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
     abi_invoker(MEM_ALLOC, numOfBlocks);
 
     //povratak
@@ -139,7 +154,7 @@ void* mem_alloc(size_t size){
 
 int mem_free(void *p){
 
-    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+    //__asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
     abi_invoker(MEM_FREE, p);
 
     //povratak
@@ -149,7 +164,7 @@ int mem_free(void *p){
 }
 
 int thread_exit(){
-    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+    //__asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
     abi_invoker(THREAD_EXIT);
 
     //povratak
@@ -162,7 +177,7 @@ int thread_create(thread_t* handle, void(*start_routine)(void*), void* arg){
     void * stack = MemoryAllocator::mem_alloc((DEFAULT_STACK_SIZE+MEM_BLOCK_SIZE-1+sizeof(MemoryAllocator::FullMem))/MEM_BLOCK_SIZE);
     if (!stack) return -1;
 
-    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+    //__asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
     abi_invoker(THREAD_CREATE, handle, start_routine, arg, stack);
 
     if(_thread::running == nullptr) _thread::running = *handle;
@@ -173,7 +188,7 @@ int thread_create(thread_t* handle, void(*start_routine)(void*), void* arg){
 }
 
 void thread_dispatch(){
-    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+    //__asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
     abi_invoker(THREAD_DISPATCH);
 }
 
@@ -183,7 +198,7 @@ void thread_create_only(thread_t* handle,
     void * stack = MemoryAllocator::mem_alloc((DEFAULT_STACK_SIZE+MEM_BLOCK_SIZE-1+sizeof(MemoryAllocator::FullMem))/MEM_BLOCK_SIZE);
     if (!stack) return ;
 
-    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+    //__asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
     abi_invoker(THREAD_CREATE_ONLY, handle, start_routine, arg, stack);
 
     int ret;
@@ -191,7 +206,7 @@ void thread_create_only(thread_t* handle,
 }
 
 void thread_start(thread_t handle){
-    __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
+   // __asm__ volatile("csrw stvec, %[vector] ": : [vector] "r" (&trap));
     abi_invoker(THREAD_START, handle);
 }
 

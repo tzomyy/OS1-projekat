@@ -56,18 +56,20 @@ int main(){
     //Riscv::w_stvec((uint64) &trap);
     //Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
-    _thread *threads[2];
+    //_thread *threads[2];
 
-    threads[0] = _thread::createThread(nullptr, nullptr);
-    _thread::running = threads[0];
+    _thread *thread = _thread::createThread(nullptr, nullptr);
+    _thread::running = thread;
 
-    threads[1] = _thread::createThread(userMain, nullptr);
+    //threads[1] = _thread::createThread(userMain, nullptr);
 
     Riscv::w_stvec((uint64) &trap);
-    Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
+    __asm__ volatile("ecall");
+
+    //Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
 
-    while (!(threads[1]->isFinished()))
+    while (!(thread->isFinished()))
     {
         _thread::yield();
     }

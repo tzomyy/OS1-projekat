@@ -22,7 +22,7 @@ public:
     static void dispatch();
     static int sleep(time_t);
 
-    void* operator new(size_t);
+   // void* operator new(size_t);
     friend void wrapperRun(void* p);
 protected:
     Thread();
