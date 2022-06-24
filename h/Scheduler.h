@@ -18,7 +18,6 @@ public:
 
     struct Elem{
         _thread* data;
-        Elem* prev;
         Elem* next;
     };
     static Elem* head;

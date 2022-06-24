@@ -20,7 +20,7 @@ _thread *_thread::createThread(Body body, void* arg){
     if (ret == nullptr) return ret;
 
     ret->body = body;
-    ret->stack = static_cast<uint64 *>(body != nullptr ? _thread::operator new[](STACK_SIZE) : nullptr),
+    ret->stack = static_cast<uint64 *>(body != nullptr ? _thread::operator new[](STACK_SIZE * sizeof(uint64)) : nullptr),
     ret->timeSlice = TIME_SLICE;
     ret->finished = false;
     ret->arg = arg;
@@ -29,9 +29,9 @@ _thread *_thread::createThread(Body body, void* arg){
             ret->stack != nullptr ? (uint64) &(ret->stack[STACK_SIZE]): 0
     };
 
-    if(body != nullptr) {
+    /*if(body != nullptr) {
         Scheduler::put(ret);
-    }
+    }*/
     return ret;
 }
 

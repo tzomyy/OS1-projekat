@@ -29,8 +29,6 @@ void workerBodyA(void* arg) {
         }
     }
     printString("A finished!\n");
-    //_thread::running->setFinished(true);
-    //thread_exit();
     finishedA = true;
     //thread_dispatch();
 }
@@ -44,8 +42,6 @@ void workerBodyB(void* arg) {
         }
     }
     printString("B finished!\n");
-    //_thread::running->setFinished(true);
-    //thread_exit();
     finishedB = true;
     thread_dispatch();
 }
@@ -73,8 +69,6 @@ void workerBodyC(void* arg) {
     }
 
     printString("C finished!\n");
-    //_thread::running->setFinished(true);
-    //thread_exit();
     finishedC = true;
     thread_dispatch();
 }
@@ -97,8 +91,6 @@ void workerBodyD(void* arg) {
     }
 
     printString("D finished!\n");
-    //_thread::running->setFinished(true);
-    //thread_exit();
     finishedD = true;
     thread_dispatch();
 }
