@@ -40,7 +40,7 @@ public:
     void addLast(T *data)
     {
 
-        Elem *elem =(Elem*) MemoryAllocator::mem_alloc((sizeof(Elem)+MEM_BLOCK_SIZE-1)/MEM_BLOCK_SIZE);
+        Elem *elem =(Elem*) MemoryAllocator::mem_alloc((sizeof(Elem)+MEM_BLOCK_SIZE-1+sizeof(MemoryAllocator::FullMem))/MEM_BLOCK_SIZE);
         elem->data = data;
         elem->next = nullptr;
         if (tail)

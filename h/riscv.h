@@ -5,8 +5,6 @@
 #ifndef OS_PROJEKAT_RISCV_H
 #define OS_PROJEKAT_RISCV_H
 
-
-
 #include "../lib/hw.h"
 
 class Riscv

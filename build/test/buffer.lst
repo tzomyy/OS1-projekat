@@ -1,0 +1,1028 @@
+GAS LISTING /tmp/ccocydxv.s 			page 1
+
+
+   1              		.file	"buffer.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN6BufferC2Ei
+   9              	_ZN6BufferC2Ei:
+  10              	.LFB12:
+  11              		.file 1 "test/buffer.cpp"
+   1:test/buffer.cpp **** //
+   2:test/buffer.cpp **** // Created by os on 6/26/22.
+   3:test/buffer.cpp **** //
+   4:test/buffer.cpp **** 
+   5:test/buffer.cpp **** #include "buffer.hpp"
+   6:test/buffer.cpp **** 
+   7:test/buffer.cpp **** Buffer::Buffer(int _cap) : cap(_cap + 1), head(0), tail(0) {
+  12              		.loc 1 7 1
+  13              		.cfi_startproc
+  14              	.LVL0:
+  15 0000 130101FE 		addi	sp,sp,-32
+  16              		.cfi_def_cfa_offset 32
+  17 0004 233C1100 		sd	ra,24(sp)
+  18 0008 23388100 		sd	s0,16(sp)
+  19 000c 23349100 		sd	s1,8(sp)
+  20 0010 23302101 		sd	s2,0(sp)
+  21              		.cfi_offset 1, -8
+  22              		.cfi_offset 8, -16
+  23              		.cfi_offset 9, -24
+  24              		.cfi_offset 18, -32
+  25 0014 13040102 		addi	s0,sp,32
+  26              		.cfi_def_cfa 8, 0
+  27 0018 93040500 		mv	s1,a0
+  28 001c 13890500 		mv	s2,a1
+  29              	.LBB2:
+  30              		.loc 1 7 37 is_stmt 0
+  31 0020 9B871500 		addiw	a5,a1,1
+  32 0024 1B850700 		sext.w	a0,a5
+  33              	.LVL1:
+  34              		.loc 1 7 58
+  35 0028 23A0F400 		sw	a5,0(s1)
+  36 002c 23A80400 		sw	zero,16(s1)
+  37 0030 23AA0400 		sw	zero,20(s1)
+   8:test/buffer.cpp ****     buffer = (int *)mem_alloc(sizeof(int) * cap);
+  38              		.loc 1 8 5 is_stmt 1
+  39              		.loc 1 8 30 is_stmt 0
+  40 0034 13152500 		slli	a0,a0,2
+  41 0038 97000000 		call	_Z9mem_allocm@plt
+  41      E7800000 
+  42              	.LVL2:
+  43              		.loc 1 8 12
+  44 0040 23B4A400 		sd	a0,8(s1)
+   9:test/buffer.cpp ****     sem_open(&itemAvailable, 0);
+  45              		.loc 1 9 5 is_stmt 1
+  46              		.loc 1 9 13 is_stmt 0
+  47 0044 93050000 		li	a1,0
+  48 0048 13850402 		addi	a0,s1,32
+GAS LISTING /tmp/ccocydxv.s 			page 2
+
+
+  49 004c 97000000 		call	_Z8sem_openPP4_semj@plt
+  49      E7800000 
+  50              	.LVL3:
+  10:test/buffer.cpp ****     sem_open(&spaceAvailable, _cap);
+  51              		.loc 1 10 5 is_stmt 1
+  52              		.loc 1 10 13 is_stmt 0
+  53 0054 93050900 		mv	a1,s2
+  54 0058 13858401 		addi	a0,s1,24
+  55 005c 97000000 		call	_Z8sem_openPP4_semj@plt
+  55      E7800000 
+  56              	.LVL4:
+  11:test/buffer.cpp ****     sem_open(&mutexHead, 1);
+  57              		.loc 1 11 5 is_stmt 1
+  58              		.loc 1 11 13 is_stmt 0
+  59 0064 93051000 		li	a1,1
+  60 0068 13858402 		addi	a0,s1,40
+  61 006c 97000000 		call	_Z8sem_openPP4_semj@plt
+  61      E7800000 
+  62              	.LVL5:
+  12:test/buffer.cpp ****     sem_open(&mutexTail, 1);
+  63              		.loc 1 12 5 is_stmt 1
+  64              		.loc 1 12 13 is_stmt 0
+  65 0074 93051000 		li	a1,1
+  66 0078 13850403 		addi	a0,s1,48
+  67 007c 97000000 		call	_Z8sem_openPP4_semj@plt
+  67      E7800000 
+  68              	.LVL6:
+  69              	.LBE2:
+  13:test/buffer.cpp **** }
+  70              		.loc 1 13 1
+  71 0084 83308101 		ld	ra,24(sp)
+  72              		.cfi_restore 1
+  73 0088 03340101 		ld	s0,16(sp)
+  74              		.cfi_restore 8
+  75              		.cfi_def_cfa 2, 32
+  76 008c 83348100 		ld	s1,8(sp)
+  77              		.cfi_restore 9
+  78              	.LVL7:
+  79 0090 03390100 		ld	s2,0(sp)
+  80              		.cfi_restore 18
+  81 0094 13010102 		addi	sp,sp,32
+  82              		.cfi_def_cfa_offset 0
+  83 0098 67800000 		jr	ra
+  84              		.cfi_endproc
+  85              	.LFE12:
+  87              		.globl	_ZN6BufferC1Ei
+  88              		.set	_ZN6BufferC1Ei,_ZN6BufferC2Ei
+  89              		.align	2
+  90              		.globl	_ZN6Buffer3putEi
+  92              	_ZN6Buffer3putEi:
+  93              	.LFB17:
+  14:test/buffer.cpp **** 
+  15:test/buffer.cpp **** Buffer::~Buffer() {
+  16:test/buffer.cpp ****     putc('\n');
+  17:test/buffer.cpp ****     printString("Buffer deleted!\n");
+  18:test/buffer.cpp ****     while (getCnt() > 0) {
+  19:test/buffer.cpp ****         char ch = buffer[head];
+GAS LISTING /tmp/ccocydxv.s 			page 3
+
+
+  20:test/buffer.cpp ****         putc(ch);
+  21:test/buffer.cpp ****         head = (head + 1) % cap;
+  22:test/buffer.cpp ****     }
+  23:test/buffer.cpp ****     putc('!');
+  24:test/buffer.cpp ****     putc('\n');
+  25:test/buffer.cpp **** 
+  26:test/buffer.cpp ****     mem_free(buffer);
+  27:test/buffer.cpp ****     sem_close(itemAvailable);
+  28:test/buffer.cpp ****     sem_close(spaceAvailable);
+  29:test/buffer.cpp ****     sem_close(mutexTail);
+  30:test/buffer.cpp ****     sem_close(mutexHead);
+  31:test/buffer.cpp **** }
+  32:test/buffer.cpp **** 
+  33:test/buffer.cpp **** void Buffer::put(int val) {
+  94              		.loc 1 33 27 is_stmt 1
+  95              		.cfi_startproc
+  96              	.LVL8:
+  97 009c 130101FE 		addi	sp,sp,-32
+  98              		.cfi_def_cfa_offset 32
+  99 00a0 233C1100 		sd	ra,24(sp)
+ 100 00a4 23388100 		sd	s0,16(sp)
+ 101 00a8 23349100 		sd	s1,8(sp)
+ 102 00ac 23302101 		sd	s2,0(sp)
+ 103              		.cfi_offset 1, -8
+ 104              		.cfi_offset 8, -16
+ 105              		.cfi_offset 9, -24
+ 106              		.cfi_offset 18, -32
+ 107 00b0 13040102 		addi	s0,sp,32
+ 108              		.cfi_def_cfa 8, 0
+ 109 00b4 93040500 		mv	s1,a0
+ 110 00b8 13890500 		mv	s2,a1
+  34:test/buffer.cpp ****     sem_wait(spaceAvailable);
+ 111              		.loc 1 34 5
+ 112              		.loc 1 34 13 is_stmt 0
+ 113 00bc 03358501 		ld	a0,24(a0)
+ 114              	.LVL9:
+ 115 00c0 97000000 		call	_Z8sem_waitP4_sem@plt
+ 115      E7800000 
+ 116              	.LVL10:
+  35:test/buffer.cpp **** 
+  36:test/buffer.cpp ****     sem_wait(mutexTail);
+ 117              		.loc 1 36 5 is_stmt 1
+ 118              		.loc 1 36 13 is_stmt 0
+ 119 00c8 03B50403 		ld	a0,48(s1)
+ 120 00cc 97000000 		call	_Z8sem_waitP4_sem@plt
+ 120      E7800000 
+ 121              	.LVL11:
+  37:test/buffer.cpp ****     buffer[tail] = val;
+ 122              		.loc 1 37 5 is_stmt 1
+ 123 00d4 83B78400 		ld	a5,8(s1)
+ 124              		.loc 1 37 12 is_stmt 0
+ 125 00d8 03A74401 		lw	a4,20(s1)
+ 126              		.loc 1 37 16
+ 127 00dc 13172700 		slli	a4,a4,2
+ 128 00e0 B387E700 		add	a5,a5,a4
+ 129              		.loc 1 37 18
+ 130 00e4 23A02701 		sw	s2,0(a5)
+GAS LISTING /tmp/ccocydxv.s 			page 4
+
+
+  38:test/buffer.cpp ****     tail = (tail + 1) % cap;
+ 131              		.loc 1 38 5 is_stmt 1
+ 132              		.loc 1 38 13 is_stmt 0
+ 133 00e8 83A74401 		lw	a5,20(s1)
+ 134              		.loc 1 38 18
+ 135 00ec 9B871700 		addiw	a5,a5,1
+ 136              		.loc 1 38 25
+ 137 00f0 03A70400 		lw	a4,0(s1)
+ 138              		.loc 1 38 23
+ 139 00f4 BBE7E702 		remw	a5,a5,a4
+ 140              		.loc 1 38 10
+ 141 00f8 23AAF400 		sw	a5,20(s1)
+  39:test/buffer.cpp ****     sem_signal(mutexTail);
+ 142              		.loc 1 39 5 is_stmt 1
+ 143              		.loc 1 39 15 is_stmt 0
+ 144 00fc 03B50403 		ld	a0,48(s1)
+ 145 0100 97000000 		call	_Z10sem_signalP4_sem@plt
+ 145      E7800000 
+ 146              	.LVL12:
+  40:test/buffer.cpp **** 
+  41:test/buffer.cpp ****     sem_signal(itemAvailable);
+ 147              		.loc 1 41 5 is_stmt 1
+ 148              		.loc 1 41 15 is_stmt 0
+ 149 0108 03B50402 		ld	a0,32(s1)
+ 150 010c 97000000 		call	_Z10sem_signalP4_sem@plt
+ 150      E7800000 
+ 151              	.LVL13:
+  42:test/buffer.cpp **** 
+  43:test/buffer.cpp **** }
+ 152              		.loc 1 43 1
+ 153 0114 83308101 		ld	ra,24(sp)
+ 154              		.cfi_restore 1
+ 155 0118 03340101 		ld	s0,16(sp)
+ 156              		.cfi_restore 8
+ 157              		.cfi_def_cfa 2, 32
+ 158 011c 83348100 		ld	s1,8(sp)
+ 159              		.cfi_restore 9
+ 160              	.LVL14:
+ 161 0120 03390100 		ld	s2,0(sp)
+ 162              		.cfi_restore 18
+ 163 0124 13010102 		addi	sp,sp,32
+ 164              		.cfi_def_cfa_offset 0
+ 165 0128 67800000 		jr	ra
+ 166              		.cfi_endproc
+ 167              	.LFE17:
+ 169              		.align	2
+ 170              		.globl	_ZN6Buffer3getEv
+ 172              	_ZN6Buffer3getEv:
+ 173              	.LFB18:
+  44:test/buffer.cpp **** 
+  45:test/buffer.cpp **** int Buffer::get() {
+ 174              		.loc 1 45 19 is_stmt 1
+ 175              		.cfi_startproc
+ 176              	.LVL15:
+ 177 012c 130101FE 		addi	sp,sp,-32
+ 178              		.cfi_def_cfa_offset 32
+ 179 0130 233C1100 		sd	ra,24(sp)
+GAS LISTING /tmp/ccocydxv.s 			page 5
+
+
+ 180 0134 23388100 		sd	s0,16(sp)
+ 181 0138 23349100 		sd	s1,8(sp)
+ 182 013c 23302101 		sd	s2,0(sp)
+ 183              		.cfi_offset 1, -8
+ 184              		.cfi_offset 8, -16
+ 185              		.cfi_offset 9, -24
+ 186              		.cfi_offset 18, -32
+ 187 0140 13040102 		addi	s0,sp,32
+ 188              		.cfi_def_cfa 8, 0
+ 189 0144 93040500 		mv	s1,a0
+  46:test/buffer.cpp ****     sem_wait(itemAvailable);
+ 190              		.loc 1 46 5
+ 191              		.loc 1 46 13 is_stmt 0
+ 192 0148 03350502 		ld	a0,32(a0)
+ 193              	.LVL16:
+ 194 014c 97000000 		call	_Z8sem_waitP4_sem@plt
+ 194      E7800000 
+ 195              	.LVL17:
+  47:test/buffer.cpp **** 
+  48:test/buffer.cpp ****     sem_wait(mutexHead);
+ 196              		.loc 1 48 5 is_stmt 1
+ 197              		.loc 1 48 13 is_stmt 0
+ 198 0154 03B58402 		ld	a0,40(s1)
+ 199 0158 97000000 		call	_Z8sem_waitP4_sem@plt
+ 199      E7800000 
+ 200              	.LVL18:
+  49:test/buffer.cpp **** 
+  50:test/buffer.cpp ****     int ret = buffer[head];
+ 201              		.loc 1 50 5 is_stmt 1
+ 202              		.loc 1 50 15 is_stmt 0
+ 203 0160 03B78400 		ld	a4,8(s1)
+ 204              		.loc 1 50 22
+ 205 0164 83A70401 		lw	a5,16(s1)
+ 206              		.loc 1 50 26
+ 207 0168 93962700 		slli	a3,a5,2
+ 208 016c 3307D700 		add	a4,a4,a3
+ 209              		.loc 1 50 9
+ 210 0170 03290700 		lw	s2,0(a4)
+ 211              	.LVL19:
+  51:test/buffer.cpp ****     head = (head + 1) % cap;
+ 212              		.loc 1 51 5 is_stmt 1
+ 213              		.loc 1 51 18 is_stmt 0
+ 214 0174 9B871700 		addiw	a5,a5,1
+ 215              		.loc 1 51 25
+ 216 0178 03A70400 		lw	a4,0(s1)
+ 217              		.loc 1 51 23
+ 218 017c BBE7E702 		remw	a5,a5,a4
+ 219              		.loc 1 51 10
+ 220 0180 23A8F400 		sw	a5,16(s1)
+  52:test/buffer.cpp ****     sem_signal(mutexHead);
+ 221              		.loc 1 52 5 is_stmt 1
+ 222              		.loc 1 52 15 is_stmt 0
+ 223 0184 03B58402 		ld	a0,40(s1)
+ 224 0188 97000000 		call	_Z10sem_signalP4_sem@plt
+ 224      E7800000 
+ 225              	.LVL20:
+  53:test/buffer.cpp **** 
+GAS LISTING /tmp/ccocydxv.s 			page 6
+
+
+  54:test/buffer.cpp ****     sem_signal(spaceAvailable);
+ 226              		.loc 1 54 5 is_stmt 1
+ 227              		.loc 1 54 15 is_stmt 0
+ 228 0190 03B58401 		ld	a0,24(s1)
+ 229 0194 97000000 		call	_Z10sem_signalP4_sem@plt
+ 229      E7800000 
+ 230              	.LVL21:
+  55:test/buffer.cpp **** 
+  56:test/buffer.cpp ****     return ret;
+ 231              		.loc 1 56 5 is_stmt 1
+  57:test/buffer.cpp **** }
+ 232              		.loc 1 57 1 is_stmt 0
+ 233 019c 13050900 		mv	a0,s2
+ 234 01a0 83308101 		ld	ra,24(sp)
+ 235              		.cfi_restore 1
+ 236 01a4 03340101 		ld	s0,16(sp)
+ 237              		.cfi_restore 8
+ 238              		.cfi_def_cfa 2, 32
+ 239 01a8 83348100 		ld	s1,8(sp)
+ 240              		.cfi_restore 9
+ 241              	.LVL22:
+ 242 01ac 03390100 		ld	s2,0(sp)
+ 243              		.cfi_restore 18
+ 244              	.LVL23:
+ 245 01b0 13010102 		addi	sp,sp,32
+ 246              		.cfi_def_cfa_offset 0
+ 247 01b4 67800000 		jr	ra
+ 248              		.cfi_endproc
+ 249              	.LFE18:
+ 251              		.align	2
+ 252              		.globl	_ZN6Buffer6getCntEv
+ 254              	_ZN6Buffer6getCntEv:
+ 255              	.LFB19:
+  58:test/buffer.cpp **** 
+  59:test/buffer.cpp **** int Buffer::getCnt() {
+ 256              		.loc 1 59 22 is_stmt 1
+ 257              		.cfi_startproc
+ 258              	.LVL24:
+ 259 01b8 130101FE 		addi	sp,sp,-32
+ 260              		.cfi_def_cfa_offset 32
+ 261 01bc 233C1100 		sd	ra,24(sp)
+ 262 01c0 23388100 		sd	s0,16(sp)
+ 263 01c4 23349100 		sd	s1,8(sp)
+ 264 01c8 23302101 		sd	s2,0(sp)
+ 265              		.cfi_offset 1, -8
+ 266              		.cfi_offset 8, -16
+ 267              		.cfi_offset 9, -24
+ 268              		.cfi_offset 18, -32
+ 269 01cc 13040102 		addi	s0,sp,32
+ 270              		.cfi_def_cfa 8, 0
+ 271 01d0 93040500 		mv	s1,a0
+  60:test/buffer.cpp ****     int ret;
+ 272              		.loc 1 60 5
+  61:test/buffer.cpp **** 
+  62:test/buffer.cpp ****     sem_wait(mutexHead);
+ 273              		.loc 1 62 5
+ 274              		.loc 1 62 13 is_stmt 0
+GAS LISTING /tmp/ccocydxv.s 			page 7
+
+
+ 275 01d4 03358502 		ld	a0,40(a0)
+ 276              	.LVL25:
+ 277 01d8 97000000 		call	_Z8sem_waitP4_sem@plt
+ 277      E7800000 
+ 278              	.LVL26:
+  63:test/buffer.cpp ****     sem_wait(mutexTail);
+ 279              		.loc 1 63 5 is_stmt 1
+ 280              		.loc 1 63 13 is_stmt 0
+ 281 01e0 03B50403 		ld	a0,48(s1)
+ 282 01e4 97000000 		call	_Z8sem_waitP4_sem@plt
+ 282      E7800000 
+ 283              	.LVL27:
+  64:test/buffer.cpp **** 
+  65:test/buffer.cpp ****     if (tail >= head) {
+ 284              		.loc 1 65 5 is_stmt 1
+ 285              		.loc 1 65 9 is_stmt 0
+ 286 01ec 83A74401 		lw	a5,20(s1)
+ 287              		.loc 1 65 17
+ 288 01f0 03A90401 		lw	s2,16(s1)
+ 289              		.loc 1 65 5
+ 290 01f4 63CE2703 		blt	a5,s2,.L8
+  66:test/buffer.cpp ****         ret = tail - head;
+ 291              		.loc 1 66 9 is_stmt 1
+ 292              		.loc 1 66 13 is_stmt 0
+ 293 01f8 3B892741 		subw	s2,a5,s2
+ 294              	.LVL28:
+ 295              	.L9:
+  67:test/buffer.cpp ****     } else {
+  68:test/buffer.cpp ****         ret = cap - head + tail;
+  69:test/buffer.cpp ****     }
+  70:test/buffer.cpp **** 
+  71:test/buffer.cpp ****     sem_signal(mutexTail);
+ 296              		.loc 1 71 5 is_stmt 1
+ 297              		.loc 1 71 15 is_stmt 0
+ 298 01fc 03B50403 		ld	a0,48(s1)
+ 299 0200 97000000 		call	_Z10sem_signalP4_sem@plt
+ 299      E7800000 
+ 300              	.LVL29:
+  72:test/buffer.cpp ****     sem_signal(mutexHead);
+ 301              		.loc 1 72 5 is_stmt 1
+ 302              		.loc 1 72 15 is_stmt 0
+ 303 0208 03B58402 		ld	a0,40(s1)
+ 304 020c 97000000 		call	_Z10sem_signalP4_sem@plt
+ 304      E7800000 
+ 305              	.LVL30:
+  73:test/buffer.cpp **** 
+  74:test/buffer.cpp ****     return ret;
+ 306              		.loc 1 74 5 is_stmt 1
+  75:test/buffer.cpp **** }...
+ 307              		.loc 1 75 1 is_stmt 0
+ 308 0214 13050900 		mv	a0,s2
+ 309 0218 83308101 		ld	ra,24(sp)
+ 310              		.cfi_remember_state
+ 311              		.cfi_restore 1
+ 312 021c 03340101 		ld	s0,16(sp)
+ 313              		.cfi_restore 8
+ 314              		.cfi_def_cfa 2, 32
+GAS LISTING /tmp/ccocydxv.s 			page 8
+
+
+ 315 0220 83348100 		ld	s1,8(sp)
+ 316              		.cfi_restore 9
+ 317              	.LVL31:
+ 318 0224 03390100 		ld	s2,0(sp)
+ 319              		.cfi_restore 18
+ 320              	.LVL32:
+ 321 0228 13010102 		addi	sp,sp,32
+ 322              		.cfi_def_cfa_offset 0
+ 323 022c 67800000 		jr	ra
+ 324              	.LVL33:
+ 325              	.L8:
+ 326              		.cfi_restore_state
+  68:test/buffer.cpp ****         ret = cap - head + tail;
+ 327              		.loc 1 68 9 is_stmt 1
+  68:test/buffer.cpp ****         ret = cap - head + tail;
+ 328              		.loc 1 68 15 is_stmt 0
+ 329 0230 03A70400 		lw	a4,0(s1)
+  68:test/buffer.cpp ****         ret = cap - head + tail;
+ 330              		.loc 1 68 19
+ 331 0234 3B092741 		subw	s2,a4,s2
+  68:test/buffer.cpp ****         ret = cap - head + tail;
+ 332              		.loc 1 68 13
+ 333 0238 3B09F900 		addw	s2,s2,a5
+ 334 023c 6FF01FFC 		j	.L9
+ 335              		.cfi_endproc
+ 336              	.LFE19:
+ 338              		.section	.rodata.str1.8,"aMS",@progbits,1
+ 339              		.align	3
+ 340              	.LC0:
+ 341 0000 42756666 		.string	"Buffer deleted!\n"
+ 341      65722064 
+ 341      656C6574 
+ 341      6564210A 
+ 341      00
+ 342              		.text
+ 343              		.align	2
+ 344              		.globl	_ZN6BufferD2Ev
+ 346              	_ZN6BufferD2Ev:
+ 347              	.LFB15:
+  15:test/buffer.cpp **** Buffer::~Buffer() {
+ 348              		.loc 1 15 1 is_stmt 1
+ 349              		.cfi_startproc
+ 350              		.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
+ 351              		.cfi_lsda 0x1b,.LLSDA15
+ 352              	.LVL34:
+ 353 0240 130101FE 		addi	sp,sp,-32
+ 354              		.cfi_def_cfa_offset 32
+ 355 0244 233C1100 		sd	ra,24(sp)
+ 356 0248 23388100 		sd	s0,16(sp)
+ 357 024c 23349100 		sd	s1,8(sp)
+ 358              		.cfi_offset 1, -8
+ 359              		.cfi_offset 8, -16
+ 360              		.cfi_offset 9, -24
+ 361 0250 13040102 		addi	s0,sp,32
+ 362              		.cfi_def_cfa 8, 0
+ 363 0254 93040500 		mv	s1,a0
+ 364              	.LBB3:
+GAS LISTING /tmp/ccocydxv.s 			page 9
+
+
+  16:test/buffer.cpp ****     putc('\n');
+ 365              		.loc 1 16 5
+  16:test/buffer.cpp ****     putc('\n');
+ 366              		.loc 1 16 9 is_stmt 0
+ 367 0258 1305A000 		li	a0,10
+ 368              	.LVL35:
+ 369 025c 97000000 		call	_Z4putcc@plt
+ 369      E7800000 
+ 370              	.LVL36:
+  17:test/buffer.cpp ****     printString("Buffer deleted!\n");
+ 371              		.loc 1 17 5 is_stmt 1
+  17:test/buffer.cpp ****     printString("Buffer deleted!\n");
+ 372              		.loc 1 17 16 is_stmt 0
+ 373 0264 17050000 		lla	a0,.LC0
+ 373      13050500 
+ 374 026c 97000000 		call	_Z11printStringPKc@plt
+ 374      E7800000 
+ 375              	.LVL37:
+ 376              	.L13:
+  18:test/buffer.cpp ****     while (getCnt() > 0) {
+ 377              		.loc 1 18 5 is_stmt 1
+  18:test/buffer.cpp ****     while (getCnt() > 0) {
+ 378              		.loc 1 18 21
+  18:test/buffer.cpp ****     while (getCnt() > 0) {
+ 379              		.loc 1 18 18 is_stmt 0
+ 380 0274 13850400 		mv	a0,s1
+ 381 0278 97000000 		call	_ZN6Buffer6getCntEv
+ 381      E7800000 
+ 382              	.LVL38:
+  18:test/buffer.cpp ****     while (getCnt() > 0) {
+ 383              		.loc 1 18 21
+ 384 0280 635CA002 		blez	a0,.L12
+ 385              	.LBB4:
+  19:test/buffer.cpp ****         char ch = buffer[head];
+ 386              		.loc 1 19 9 is_stmt 1
+  19:test/buffer.cpp ****         char ch = buffer[head];
+ 387              		.loc 1 19 19 is_stmt 0
+ 388 0284 83B78400 		ld	a5,8(s1)
+  19:test/buffer.cpp ****         char ch = buffer[head];
+ 389              		.loc 1 19 26
+ 390 0288 03A70401 		lw	a4,16(s1)
+  19:test/buffer.cpp ****         char ch = buffer[head];
+ 391              		.loc 1 19 30
+ 392 028c 13172700 		slli	a4,a4,2
+ 393 0290 B387E700 		add	a5,a5,a4
+ 394              	.LVL39:
+  20:test/buffer.cpp ****         putc(ch);
+ 395              		.loc 1 20 9 is_stmt 1
+  20:test/buffer.cpp ****         putc(ch);
+ 396              		.loc 1 20 13 is_stmt 0
+ 397 0294 03C50700 		lbu	a0,0(a5)
+ 398 0298 97000000 		call	_Z4putcc@plt
+ 398      E7800000 
+ 399              	.LVL40:
+  21:test/buffer.cpp ****         head = (head + 1) % cap;
+ 400              		.loc 1 21 9 is_stmt 1
+  21:test/buffer.cpp ****         head = (head + 1) % cap;
+GAS LISTING /tmp/ccocydxv.s 			page 10
+
+
+ 401              		.loc 1 21 17 is_stmt 0
+ 402 02a0 83A70401 		lw	a5,16(s1)
+  21:test/buffer.cpp ****         head = (head + 1) % cap;
+ 403              		.loc 1 21 22
+ 404 02a4 9B871700 		addiw	a5,a5,1
+  21:test/buffer.cpp ****         head = (head + 1) % cap;
+ 405              		.loc 1 21 29
+ 406 02a8 03A70400 		lw	a4,0(s1)
+  21:test/buffer.cpp ****         head = (head + 1) % cap;
+ 407              		.loc 1 21 27
+ 408 02ac BBE7E702 		remw	a5,a5,a4
+  21:test/buffer.cpp ****         head = (head + 1) % cap;
+ 409              		.loc 1 21 14
+ 410 02b0 23A8F400 		sw	a5,16(s1)
+ 411              	.LBE4:
+  18:test/buffer.cpp ****     while (getCnt() > 0) {
+ 412              		.loc 1 18 5
+ 413 02b4 6FF01FFC 		j	.L13
+ 414              	.L12:
+  23:test/buffer.cpp ****     putc('!');
+ 415              		.loc 1 23 5 is_stmt 1
+  23:test/buffer.cpp ****     putc('!');
+ 416              		.loc 1 23 9 is_stmt 0
+ 417 02b8 13051002 		li	a0,33
+ 418 02bc 97000000 		call	_Z4putcc@plt
+ 418      E7800000 
+ 419              	.LVL41:
+  24:test/buffer.cpp ****     putc('\n');
+ 420              		.loc 1 24 5 is_stmt 1
+  24:test/buffer.cpp ****     putc('\n');
+ 421              		.loc 1 24 9 is_stmt 0
+ 422 02c4 1305A000 		li	a0,10
+ 423 02c8 97000000 		call	_Z4putcc@plt
+ 423      E7800000 
+ 424              	.LVL42:
+  26:test/buffer.cpp ****     mem_free(buffer);
+ 425              		.loc 1 26 5 is_stmt 1
+  26:test/buffer.cpp ****     mem_free(buffer);
+ 426              		.loc 1 26 13 is_stmt 0
+ 427 02d0 03B58400 		ld	a0,8(s1)
+ 428 02d4 97000000 		call	_Z8mem_freePv@plt
+ 428      E7800000 
+ 429              	.LVL43:
+  27:test/buffer.cpp ****     sem_close(itemAvailable);
+ 430              		.loc 1 27 5 is_stmt 1
+  27:test/buffer.cpp ****     sem_close(itemAvailable);
+ 431              		.loc 1 27 14 is_stmt 0
+ 432 02dc 03B50402 		ld	a0,32(s1)
+ 433 02e0 97000000 		call	_Z9sem_closeP4_sem@plt
+ 433      E7800000 
+ 434              	.LVL44:
+  28:test/buffer.cpp ****     sem_close(spaceAvailable);
+ 435              		.loc 1 28 5 is_stmt 1
+  28:test/buffer.cpp ****     sem_close(spaceAvailable);
+ 436              		.loc 1 28 14 is_stmt 0
+ 437 02e8 03B58401 		ld	a0,24(s1)
+ 438 02ec 97000000 		call	_Z9sem_closeP4_sem@plt
+GAS LISTING /tmp/ccocydxv.s 			page 11
+
+
+ 438      E7800000 
+ 439              	.LVL45:
+  29:test/buffer.cpp ****     sem_close(mutexTail);
+ 440              		.loc 1 29 5 is_stmt 1
+  29:test/buffer.cpp ****     sem_close(mutexTail);
+ 441              		.loc 1 29 14 is_stmt 0
+ 442 02f4 03B50403 		ld	a0,48(s1)
+ 443 02f8 97000000 		call	_Z9sem_closeP4_sem@plt
+ 443      E7800000 
+ 444              	.LVL46:
+  30:test/buffer.cpp ****     sem_close(mutexHead);
+ 445              		.loc 1 30 5 is_stmt 1
+  30:test/buffer.cpp ****     sem_close(mutexHead);
+ 446              		.loc 1 30 14 is_stmt 0
+ 447 0300 03B58402 		ld	a0,40(s1)
+ 448 0304 97000000 		call	_Z9sem_closeP4_sem@plt
+ 448      E7800000 
+ 449              	.LVL47:
+ 450              	.LBE3:
+  31:test/buffer.cpp **** }
+ 451              		.loc 1 31 1
+ 452 030c 83308101 		ld	ra,24(sp)
+ 453              		.cfi_restore 1
+ 454 0310 03340101 		ld	s0,16(sp)
+ 455              		.cfi_restore 8
+ 456              		.cfi_def_cfa 2, 32
+ 457 0314 83348100 		ld	s1,8(sp)
+ 458              		.cfi_restore 9
+ 459              	.LVL48:
+ 460 0318 13010102 		addi	sp,sp,32
+ 461              		.cfi_def_cfa_offset 0
+ 462 031c 67800000 		jr	ra
+ 463              		.cfi_endproc
+ 464              	.LFE15:
+ 465              		.globl	__gxx_personality_v0
+ 466              		.section	.gcc_except_table,"a",@progbits
+ 467              	.LLSDA15:
+ 468 0000 FF       		.byte	0xff
+ 469 0001 FF       		.byte	0xff
+ 470 0002 03       		.byte	0x3
+ 471 0003 00       		.byte	0
+ 472              		.text
+ 474              		.globl	_ZN6BufferD1Ev
+ 475              		.set	_ZN6BufferD1Ev,_ZN6BufferD2Ev
+ 476              	.Letext0:
+ 477              		.file 2 "test/../h/../lib/hw.h"
+ 478              		.file 3 "test/../h/syscall_c.h"
+ 479              		.file 4 "test/buffer.hpp"
+ 480              		.file 5 "test/printing.h"
+ 2042              		.align	3
+ 2045              	DW.ref.__gxx_personality_v0:
+ 2046 0000 00000000 		.dword	__gxx_personality_v0
+ 2046      00000000 
+ 2047              		.ident	"GCC: (Ubuntu 9.4.0-1ubuntu1~20.04) 9.4.0"
+ 2048              		.section	.note.GNU-stack,"",@progbits
+GAS LISTING /tmp/ccocydxv.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 buffer.cpp
+     /tmp/ccocydxv.s:9      .text:0000000000000000 _ZN6BufferC2Ei
+     /tmp/ccocydxv.s:13     .text:0000000000000000 .L0 
+     /tmp/ccocydxv.s:15     .text:0000000000000000 .L0 
+     /tmp/ccocydxv.s:16     .text:0000000000000004 .L0 
+     /tmp/ccocydxv.s:21     .text:0000000000000014 .L0 
+     /tmp/ccocydxv.s:22     .text:0000000000000014 .L0 
+     /tmp/ccocydxv.s:23     .text:0000000000000014 .L0 
+     /tmp/ccocydxv.s:24     .text:0000000000000014 .L0 
+     /tmp/ccocydxv.s:26     .text:0000000000000018 .L0 
+     /tmp/ccocydxv.s:31     .text:0000000000000020 .L0 
+     /tmp/ccocydxv.s:35     .text:0000000000000028 .L0 
+     /tmp/ccocydxv.s:39     .text:0000000000000034 .L0 
+     /tmp/ccocydxv.s:40     .text:0000000000000034 .L0 
+     /tmp/ccocydxv.s:44     .text:0000000000000040 .L0 
+     /tmp/ccocydxv.s:46     .text:0000000000000044 .L0 
+     /tmp/ccocydxv.s:47     .text:0000000000000044 .L0 
+     /tmp/ccocydxv.s:52     .text:0000000000000054 .L0 
+     /tmp/ccocydxv.s:53     .text:0000000000000054 .L0 
+     /tmp/ccocydxv.s:58     .text:0000000000000064 .L0 
+     /tmp/ccocydxv.s:59     .text:0000000000000064 .L0 
+     /tmp/ccocydxv.s:64     .text:0000000000000074 .L0 
+     /tmp/ccocydxv.s:65     .text:0000000000000074 .L0 
+     /tmp/ccocydxv.s:71     .text:0000000000000084 .L0 
+     /tmp/ccocydxv.s:72     .text:0000000000000088 .L0 
+     /tmp/ccocydxv.s:74     .text:000000000000008c .L0 
+     /tmp/ccocydxv.s:75     .text:000000000000008c .L0 
+     /tmp/ccocydxv.s:77     .text:0000000000000090 .L0 
+     /tmp/ccocydxv.s:80     .text:0000000000000094 .L0 
+     /tmp/ccocydxv.s:82     .text:0000000000000098 .L0 
+     /tmp/ccocydxv.s:84     .text:000000000000009c .L0 
+     /tmp/ccocydxv.s:9      .text:0000000000000000 _ZN6BufferC1Ei
+     /tmp/ccocydxv.s:92     .text:000000000000009c _ZN6Buffer3putEi
+     /tmp/ccocydxv.s:95     .text:000000000000009c .L0 
+     /tmp/ccocydxv.s:97     .text:000000000000009c .L0 
+     /tmp/ccocydxv.s:98     .text:00000000000000a0 .L0 
+     /tmp/ccocydxv.s:103    .text:00000000000000b0 .L0 
+     /tmp/ccocydxv.s:104    .text:00000000000000b0 .L0 
+     /tmp/ccocydxv.s:105    .text:00000000000000b0 .L0 
+     /tmp/ccocydxv.s:106    .text:00000000000000b0 .L0 
+     /tmp/ccocydxv.s:108    .text:00000000000000b4 .L0 
+     /tmp/ccocydxv.s:112    .text:00000000000000bc .L0 
+     /tmp/ccocydxv.s:113    .text:00000000000000bc .L0 
+     /tmp/ccocydxv.s:118    .text:00000000000000c8 .L0 
+     /tmp/ccocydxv.s:119    .text:00000000000000c8 .L0 
+     /tmp/ccocydxv.s:123    .text:00000000000000d4 .L0 
+     /tmp/ccocydxv.s:125    .text:00000000000000d8 .L0 
+     /tmp/ccocydxv.s:127    .text:00000000000000dc .L0 
+     /tmp/ccocydxv.s:130    .text:00000000000000e4 .L0 
+     /tmp/ccocydxv.s:132    .text:00000000000000e8 .L0 
+     /tmp/ccocydxv.s:133    .text:00000000000000e8 .L0 
+     /tmp/ccocydxv.s:135    .text:00000000000000ec .L0 
+     /tmp/ccocydxv.s:137    .text:00000000000000f0 .L0 
+     /tmp/ccocydxv.s:139    .text:00000000000000f4 .L0 
+     /tmp/ccocydxv.s:141    .text:00000000000000f8 .L0 
+     /tmp/ccocydxv.s:143    .text:00000000000000fc .L0 
+GAS LISTING /tmp/ccocydxv.s 			page 13
+
+
+     /tmp/ccocydxv.s:144    .text:00000000000000fc .L0 
+     /tmp/ccocydxv.s:148    .text:0000000000000108 .L0 
+     /tmp/ccocydxv.s:149    .text:0000000000000108 .L0 
+     /tmp/ccocydxv.s:153    .text:0000000000000114 .L0 
+     /tmp/ccocydxv.s:154    .text:0000000000000118 .L0 
+     /tmp/ccocydxv.s:156    .text:000000000000011c .L0 
+     /tmp/ccocydxv.s:157    .text:000000000000011c .L0 
+     /tmp/ccocydxv.s:159    .text:0000000000000120 .L0 
+     /tmp/ccocydxv.s:162    .text:0000000000000124 .L0 
+     /tmp/ccocydxv.s:164    .text:0000000000000128 .L0 
+     /tmp/ccocydxv.s:166    .text:000000000000012c .L0 
+     /tmp/ccocydxv.s:172    .text:000000000000012c _ZN6Buffer3getEv
+     /tmp/ccocydxv.s:175    .text:000000000000012c .L0 
+     /tmp/ccocydxv.s:177    .text:000000000000012c .L0 
+     /tmp/ccocydxv.s:178    .text:0000000000000130 .L0 
+     /tmp/ccocydxv.s:183    .text:0000000000000140 .L0 
+     /tmp/ccocydxv.s:184    .text:0000000000000140 .L0 
+     /tmp/ccocydxv.s:185    .text:0000000000000140 .L0 
+     /tmp/ccocydxv.s:186    .text:0000000000000140 .L0 
+     /tmp/ccocydxv.s:188    .text:0000000000000144 .L0 
+     /tmp/ccocydxv.s:191    .text:0000000000000148 .L0 
+     /tmp/ccocydxv.s:192    .text:0000000000000148 .L0 
+     /tmp/ccocydxv.s:197    .text:0000000000000154 .L0 
+     /tmp/ccocydxv.s:198    .text:0000000000000154 .L0 
+     /tmp/ccocydxv.s:202    .text:0000000000000160 .L0 
+     /tmp/ccocydxv.s:203    .text:0000000000000160 .L0 
+     /tmp/ccocydxv.s:205    .text:0000000000000164 .L0 
+     /tmp/ccocydxv.s:207    .text:0000000000000168 .L0 
+     /tmp/ccocydxv.s:210    .text:0000000000000170 .L0 
+     /tmp/ccocydxv.s:213    .text:0000000000000174 .L0 
+     /tmp/ccocydxv.s:214    .text:0000000000000174 .L0 
+     /tmp/ccocydxv.s:216    .text:0000000000000178 .L0 
+     /tmp/ccocydxv.s:218    .text:000000000000017c .L0 
+     /tmp/ccocydxv.s:220    .text:0000000000000180 .L0 
+     /tmp/ccocydxv.s:222    .text:0000000000000184 .L0 
+     /tmp/ccocydxv.s:223    .text:0000000000000184 .L0 
+     /tmp/ccocydxv.s:227    .text:0000000000000190 .L0 
+     /tmp/ccocydxv.s:228    .text:0000000000000190 .L0 
+     /tmp/ccocydxv.s:232    .text:000000000000019c .L0 
+     /tmp/ccocydxv.s:233    .text:000000000000019c .L0 
+     /tmp/ccocydxv.s:235    .text:00000000000001a4 .L0 
+     /tmp/ccocydxv.s:237    .text:00000000000001a8 .L0 
+     /tmp/ccocydxv.s:238    .text:00000000000001a8 .L0 
+     /tmp/ccocydxv.s:240    .text:00000000000001ac .L0 
+     /tmp/ccocydxv.s:243    .text:00000000000001b0 .L0 
+     /tmp/ccocydxv.s:246    .text:00000000000001b4 .L0 
+     /tmp/ccocydxv.s:248    .text:00000000000001b8 .L0 
+     /tmp/ccocydxv.s:254    .text:00000000000001b8 _ZN6Buffer6getCntEv
+     /tmp/ccocydxv.s:257    .text:00000000000001b8 .L0 
+     /tmp/ccocydxv.s:259    .text:00000000000001b8 .L0 
+     /tmp/ccocydxv.s:260    .text:00000000000001bc .L0 
+     /tmp/ccocydxv.s:265    .text:00000000000001cc .L0 
+     /tmp/ccocydxv.s:266    .text:00000000000001cc .L0 
+     /tmp/ccocydxv.s:267    .text:00000000000001cc .L0 
+     /tmp/ccocydxv.s:268    .text:00000000000001cc .L0 
+     /tmp/ccocydxv.s:270    .text:00000000000001d0 .L0 
+     /tmp/ccocydxv.s:273    .text:00000000000001d4 .L0 
+GAS LISTING /tmp/ccocydxv.s 			page 14
+
+
+     /tmp/ccocydxv.s:274    .text:00000000000001d4 .L0 
+     /tmp/ccocydxv.s:275    .text:00000000000001d4 .L0 
+     /tmp/ccocydxv.s:280    .text:00000000000001e0 .L0 
+     /tmp/ccocydxv.s:281    .text:00000000000001e0 .L0 
+     /tmp/ccocydxv.s:285    .text:00000000000001ec .L0 
+     /tmp/ccocydxv.s:286    .text:00000000000001ec .L0 
+     /tmp/ccocydxv.s:288    .text:00000000000001f0 .L0 
+     /tmp/ccocydxv.s:290    .text:00000000000001f4 .L0 
+     /tmp/ccocydxv.s:292    .text:00000000000001f8 .L0 
+     /tmp/ccocydxv.s:293    .text:00000000000001f8 .L0 
+     /tmp/ccocydxv.s:297    .text:00000000000001fc .L0 
+     /tmp/ccocydxv.s:298    .text:00000000000001fc .L0 
+     /tmp/ccocydxv.s:302    .text:0000000000000208 .L0 
+     /tmp/ccocydxv.s:303    .text:0000000000000208 .L0 
+     /tmp/ccocydxv.s:307    .text:0000000000000214 .L0 
+     /tmp/ccocydxv.s:308    .text:0000000000000214 .L0 
+     /tmp/ccocydxv.s:310    .text:000000000000021c .L0 
+     /tmp/ccocydxv.s:311    .text:000000000000021c .L0 
+     /tmp/ccocydxv.s:313    .text:0000000000000220 .L0 
+     /tmp/ccocydxv.s:314    .text:0000000000000220 .L0 
+     /tmp/ccocydxv.s:316    .text:0000000000000224 .L0 
+     /tmp/ccocydxv.s:319    .text:0000000000000228 .L0 
+     /tmp/ccocydxv.s:322    .text:000000000000022c .L0 
+     /tmp/ccocydxv.s:326    .text:0000000000000230 .L0 
+     /tmp/ccocydxv.s:328    .text:0000000000000230 .L0 
+     /tmp/ccocydxv.s:329    .text:0000000000000230 .L0 
+     /tmp/ccocydxv.s:331    .text:0000000000000234 .L0 
+     /tmp/ccocydxv.s:333    .text:0000000000000238 .L0 
+     /tmp/ccocydxv.s:335    .text:0000000000000240 .L0 
+     /tmp/ccocydxv.s:346    .text:0000000000000240 _ZN6BufferD2Ev
+     /tmp/ccocydxv.s:349    .text:0000000000000240 .L0 
+     /tmp/ccocydxv.s:2045   .data.rel.local.DW.ref.__gxx_personality_v0:0000000000000000 DW.ref.__gxx_personality_v0
+     /tmp/ccocydxv.s:353    .text:0000000000000240 .L0 
+     /tmp/ccocydxv.s:354    .text:0000000000000244 .L0 
+     /tmp/ccocydxv.s:358    .text:0000000000000250 .L0 
+     /tmp/ccocydxv.s:359    .text:0000000000000250 .L0 
+     /tmp/ccocydxv.s:360    .text:0000000000000250 .L0 
+     /tmp/ccocydxv.s:362    .text:0000000000000254 .L0 
+     /tmp/ccocydxv.s:366    .text:0000000000000258 .L0 
+     /tmp/ccocydxv.s:367    .text:0000000000000258 .L0 
+     /tmp/ccocydxv.s:372    .text:0000000000000264 .L0 
+     /tmp/ccocydxv.s:373    .text:0000000000000264 .L0 
+     /tmp/ccocydxv.s:378    .text:0000000000000274 .L0 
+     /tmp/ccocydxv.s:379    .text:0000000000000274 .L0 
+     /tmp/ccocydxv.s:380    .text:0000000000000274 .L0 
+     /tmp/ccocydxv.s:384    .text:0000000000000280 .L0 
+     /tmp/ccocydxv.s:387    .text:0000000000000284 .L0 
+     /tmp/ccocydxv.s:388    .text:0000000000000284 .L0 
+     /tmp/ccocydxv.s:390    .text:0000000000000288 .L0 
+     /tmp/ccocydxv.s:392    .text:000000000000028c .L0 
+     /tmp/ccocydxv.s:396    .text:0000000000000294 .L0 
+     /tmp/ccocydxv.s:397    .text:0000000000000294 .L0 
+     /tmp/ccocydxv.s:401    .text:00000000000002a0 .L0 
+     /tmp/ccocydxv.s:402    .text:00000000000002a0 .L0 
+     /tmp/ccocydxv.s:404    .text:00000000000002a4 .L0 
+     /tmp/ccocydxv.s:406    .text:00000000000002a8 .L0 
+     /tmp/ccocydxv.s:408    .text:00000000000002ac .L0 
+GAS LISTING /tmp/ccocydxv.s 			page 15
+
+
+     /tmp/ccocydxv.s:410    .text:00000000000002b0 .L0 
+     /tmp/ccocydxv.s:413    .text:00000000000002b4 .L0 
+     /tmp/ccocydxv.s:416    .text:00000000000002b8 .L0 
+     /tmp/ccocydxv.s:417    .text:00000000000002b8 .L0 
+     /tmp/ccocydxv.s:421    .text:00000000000002c4 .L0 
+     /tmp/ccocydxv.s:422    .text:00000000000002c4 .L0 
+     /tmp/ccocydxv.s:426    .text:00000000000002d0 .L0 
+     /tmp/ccocydxv.s:427    .text:00000000000002d0 .L0 
+     /tmp/ccocydxv.s:431    .text:00000000000002dc .L0 
+     /tmp/ccocydxv.s:432    .text:00000000000002dc .L0 
+     /tmp/ccocydxv.s:436    .text:00000000000002e8 .L0 
+     /tmp/ccocydxv.s:437    .text:00000000000002e8 .L0 
+     /tmp/ccocydxv.s:441    .text:00000000000002f4 .L0 
+     /tmp/ccocydxv.s:442    .text:00000000000002f4 .L0 
+     /tmp/ccocydxv.s:446    .text:0000000000000300 .L0 
+     /tmp/ccocydxv.s:447    .text:0000000000000300 .L0 
+     /tmp/ccocydxv.s:452    .text:000000000000030c .L0 
+     /tmp/ccocydxv.s:453    .text:0000000000000310 .L0 
+     /tmp/ccocydxv.s:455    .text:0000000000000314 .L0 
+     /tmp/ccocydxv.s:456    .text:0000000000000314 .L0 
+     /tmp/ccocydxv.s:458    .text:0000000000000318 .L0 
+     /tmp/ccocydxv.s:461    .text:000000000000031c .L0 
+     /tmp/ccocydxv.s:463    .text:0000000000000320 .L0 
+     /tmp/ccocydxv.s:346    .text:0000000000000240 _ZN6BufferD1Ev
+     /tmp/ccocydxv.s:481    .text:0000000000000320 .L0 
+     /tmp/ccocydxv.s:340    .rodata.str1.8:0000000000000000 .LC0
+     /tmp/ccocydxv.s:373    .text:0000000000000264 .L0 
+     /tmp/ccocydxv.s:325    .text:0000000000000230 .L8
+     /tmp/ccocydxv.s:295    .text:00000000000001fc .L9
+     /tmp/ccocydxv.s:414    .text:00000000000002b8 .L12
+     /tmp/ccocydxv.s:376    .text:0000000000000274 .L13
+     /tmp/ccocydxv.s:1167   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccocydxv.s:1981   .debug_str:00000000000001a0 .LASF52
+     /tmp/ccocydxv.s:1939   .debug_str:0000000000000063 .LASF53
+     /tmp/ccocydxv.s:2005   .debug_str:00000000000002f6 .LASF54
+     /tmp/ccocydxv.s:5      .text:0000000000000000 .Ltext0
+     /tmp/ccocydxv.s:476    .text:0000000000000320 .Letext0
+     /tmp/ccocydxv.s:1919   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccocydxv.s:1991   .debug_str:000000000000028e .LASF0
+     /tmp/ccocydxv.s:1967   .debug_str:000000000000013b .LASF1
+     /tmp/ccocydxv.s:1955   .debug_str:00000000000000ef .LASF2
+     /tmp/ccocydxv.s:1931   .debug_str:0000000000000033 .LASF4
+     /tmp/ccocydxv.s:1965   .debug_str:0000000000000129 .LASF3
+     /tmp/ccocydxv.s:1925   .debug_str:0000000000000018 .LASF5
+     /tmp/ccocydxv.s:1923   .debug_str:0000000000000005 .LASF6
+     /tmp/ccocydxv.s:1945   .debug_str:0000000000000097 .LASF7
+     /tmp/ccocydxv.s:2001   .debug_str:00000000000002d0 .LASF8
+     /tmp/ccocydxv.s:1929   .debug_str:0000000000000025 .LASF9
+     /tmp/ccocydxv.s:2037   .debug_str:00000000000003a9 .LASF10
+     /tmp/ccocydxv.s:1949   .debug_str:00000000000000bc .LASF11
+     /tmp/ccocydxv.s:2025   .debug_str:000000000000035b .LASF12
+     /tmp/ccocydxv.s:2007   .debug_str:0000000000000313 .LASF13
+     /tmp/ccocydxv.s:1973   .debug_str:0000000000000166 .LASF14
+     /tmp/ccocydxv.s:1941   .debug_str:0000000000000073 .LASF15
+     /tmp/ccocydxv.s:2003   .debug_str:00000000000002e0 .LASF16
+     /tmp/ccocydxv.s:1927   .debug_str:000000000000001f .LASF17
+     /tmp/ccocydxv.s:1999   .debug_str:00000000000002cb .LASF55
+GAS LISTING /tmp/ccocydxv.s 			page 16
+
+
+     /tmp/ccocydxv.s:2011   .debug_str:000000000000032c .LASF25
+     /tmp/ccocydxv.s:2015   .debug_str:0000000000000338 .LASF18
+     /tmp/ccocydxv.s:1985   .debug_str:000000000000026d .LASF19
+     /tmp/ccocydxv.s:2017   .debug_str:000000000000033f .LASF20
+     /tmp/ccocydxv.s:1971   .debug_str:0000000000000157 .LASF21
+     /tmp/ccocydxv.s:1943   .debug_str:0000000000000089 .LASF22
+     /tmp/ccocydxv.s:1993   .debug_str:000000000000029b .LASF23
+     /tmp/ccocydxv.s:2033   .debug_str:0000000000000393 .LASF24
+     /tmp/ccocydxv.s:2029   .debug_str:0000000000000375 .LASF27
+     /tmp/ccocydxv.s:2019   .debug_str:0000000000000344 .LASF26
+     /tmp/ccocydxv.s:1933   .debug_str:000000000000003a .LASF28
+     /tmp/ccocydxv.s:1951   .debug_str:00000000000000cb .LASF56
+     /tmp/ccocydxv.s:1995   .debug_str:00000000000002a5 .LASF57
+     /tmp/ccocydxv.s:1937   .debug_str:000000000000005c .LASF29
+     /tmp/ccocydxv.s:1975   .debug_str:0000000000000172 .LASF30
+     /tmp/ccocydxv.s:255    .text:00000000000001b8 .LFB19
+     /tmp/ccocydxv.s:336    .text:0000000000000240 .LFE19
+     /tmp/ccocydxv.s:1957   .debug_str:00000000000000fd .LASF31
+     /tmp/ccocydxv.s:1758   .debug_loc:0000000000000000 .LLST6
+     /tmp/ccocydxv.s:1780   .debug_loc:000000000000005f .LLST7
+     /tmp/ccocydxv.s:278    .text:00000000000001e0 .LVL26
+     /tmp/ccocydxv.s:283    .text:00000000000001ec .LVL27
+     /tmp/ccocydxv.s:300    .text:0000000000000208 .LVL29
+     /tmp/ccocydxv.s:305    .text:0000000000000214 .LVL30
+     /tmp/ccocydxv.s:173    .text:000000000000012c .LFB18
+     /tmp/ccocydxv.s:249    .text:00000000000001b8 .LFE18
+     /tmp/ccocydxv.s:1787   .debug_loc:0000000000000082 .LLST4
+     /tmp/ccocydxv.s:1805   .debug_loc:00000000000000ce .LLST5
+     /tmp/ccocydxv.s:195    .text:0000000000000154 .LVL17
+     /tmp/ccocydxv.s:200    .text:0000000000000160 .LVL18
+     /tmp/ccocydxv.s:225    .text:0000000000000190 .LVL20
+     /tmp/ccocydxv.s:230    .text:000000000000019c .LVL21
+     /tmp/ccocydxv.s:93     .text:000000000000009c .LFB17
+     /tmp/ccocydxv.s:167    .text:000000000000012c .LFE17
+     /tmp/ccocydxv.s:1816   .debug_loc:0000000000000104 .LLST2
+     /tmp/ccocydxv.s:1834   .debug_loc:0000000000000150 .LLST3
+     /tmp/ccocydxv.s:116    .text:00000000000000c8 .LVL10
+     /tmp/ccocydxv.s:121    .text:00000000000000d4 .LVL11
+     /tmp/ccocydxv.s:146    .text:0000000000000108 .LVL12
+     /tmp/ccocydxv.s:151    .text:0000000000000114 .LVL13
+     /tmp/ccocydxv.s:2021   .debug_str:000000000000034c .LASF32
+     /tmp/ccocydxv.s:2023   .debug_str:0000000000000356 .LASF33
+     /tmp/ccocydxv.s:1979   .debug_str:0000000000000191 .LASF34
+     /tmp/ccocydxv.s:347    .text:0000000000000240 .LFB15
+     /tmp/ccocydxv.s:464    .text:0000000000000320 .LFE15
+     /tmp/ccocydxv.s:1848   .debug_loc:0000000000000189 .LLST8
+     /tmp/ccocydxv.s:399    .text:00000000000002a0 .LVL40
+     /tmp/ccocydxv.s:385    .text:0000000000000284 .LBB4
+     /tmp/ccocydxv.s:411    .text:00000000000002b4 .LBE4
+     /tmp/ccocydxv.s:1866   .debug_loc:00000000000001d5 .LLST9
+     /tmp/ccocydxv.s:370    .text:0000000000000264 .LVL36
+     /tmp/ccocydxv.s:375    .text:0000000000000274 .LVL37
+     /tmp/ccocydxv.s:382    .text:0000000000000280 .LVL38
+     /tmp/ccocydxv.s:419    .text:00000000000002c4 .LVL41
+     /tmp/ccocydxv.s:424    .text:00000000000002d0 .LVL42
+     /tmp/ccocydxv.s:429    .text:00000000000002dc .LVL43
+     /tmp/ccocydxv.s:434    .text:00000000000002e8 .LVL44
+GAS LISTING /tmp/ccocydxv.s 			page 17
+
+
+     /tmp/ccocydxv.s:439    .text:00000000000002f4 .LVL45
+     /tmp/ccocydxv.s:444    .text:0000000000000300 .LVL46
+     /tmp/ccocydxv.s:449    .text:000000000000030c .LVL47
+     /tmp/ccocydxv.s:1921   .debug_str:0000000000000000 .LASF58
+     /tmp/ccocydxv.s:2031   .debug_str:0000000000000384 .LASF35
+     /tmp/ccocydxv.s:10     .text:0000000000000000 .LFB12
+     /tmp/ccocydxv.s:85     .text:000000000000009c .LFE12
+     /tmp/ccocydxv.s:1874   .debug_loc:00000000000001f9 .LLST0
+     /tmp/ccocydxv.s:1892   .debug_loc:0000000000000245 .LLST1
+     /tmp/ccocydxv.s:42     .text:0000000000000040 .LVL2
+     /tmp/ccocydxv.s:50     .text:0000000000000054 .LVL3
+     /tmp/ccocydxv.s:56     .text:0000000000000064 .LVL4
+     /tmp/ccocydxv.s:62     .text:0000000000000074 .LVL5
+     /tmp/ccocydxv.s:68     .text:0000000000000084 .LVL6
+     /tmp/ccocydxv.s:1947   .debug_str:00000000000000aa .LASF36
+     /tmp/ccocydxv.s:1983   .debug_str:0000000000000264 .LASF38
+     /tmp/ccocydxv.s:1997   .debug_str:00000000000002b6 .LASF37
+     /tmp/ccocydxv.s:1977   .debug_str:0000000000000186 .LASF39
+     /tmp/ccocydxv.s:1969   .debug_str:000000000000014e .LASF40
+     /tmp/ccocydxv.s:2013   .debug_str:0000000000000333 .LASF41
+     /tmp/ccocydxv.s:1953   .debug_str:00000000000000dc .LASF42
+     /tmp/ccocydxv.s:2035   .debug_str:000000000000039d .LASF43
+     /tmp/ccocydxv.s:1989   .debug_str:0000000000000280 .LASF44
+     /tmp/ccocydxv.s:2009   .debug_str:0000000000000323 .LASF45
+     /tmp/ccocydxv.s:1935   .debug_str:0000000000000049 .LASF46
+     /tmp/ccocydxv.s:1963   .debug_str:000000000000011f .LASF47
+     /tmp/ccocydxv.s:1987   .debug_str:0000000000000272 .LASF48
+     /tmp/ccocydxv.s:2027   .debug_str:000000000000036b .LASF49
+     /tmp/ccocydxv.s:1961   .debug_str:000000000000010b .LASF50
+     /tmp/ccocydxv.s:1959   .debug_str:0000000000000102 .LASF51
+     /tmp/ccocydxv.s:258    .text:00000000000001b8 .LVL24
+     /tmp/ccocydxv.s:276    .text:00000000000001d8 .LVL25
+     /tmp/ccocydxv.s:317    .text:0000000000000224 .LVL31
+     /tmp/ccocydxv.s:324    .text:0000000000000230 .LVL33
+     /tmp/ccocydxv.s:294    .text:00000000000001fc .LVL28
+     /tmp/ccocydxv.s:320    .text:0000000000000228 .LVL32
+     /tmp/ccocydxv.s:176    .text:000000000000012c .LVL15
+     /tmp/ccocydxv.s:193    .text:000000000000014c .LVL16
+     /tmp/ccocydxv.s:241    .text:00000000000001ac .LVL22
+     /tmp/ccocydxv.s:211    .text:0000000000000174 .LVL19
+     /tmp/ccocydxv.s:244    .text:00000000000001b0 .LVL23
+     /tmp/ccocydxv.s:96     .text:000000000000009c .LVL8
+     /tmp/ccocydxv.s:114    .text:00000000000000c0 .LVL9
+     /tmp/ccocydxv.s:160    .text:0000000000000120 .LVL14
+     /tmp/ccocydxv.s:352    .text:0000000000000240 .LVL34
+     /tmp/ccocydxv.s:368    .text:000000000000025c .LVL35
+     /tmp/ccocydxv.s:459    .text:0000000000000318 .LVL48
+     /tmp/ccocydxv.s:394    .text:0000000000000294 .LVL39
+     /tmp/ccocydxv.s:14     .text:0000000000000000 .LVL0
+     /tmp/ccocydxv.s:33     .text:0000000000000028 .LVL1
+     /tmp/ccocydxv.s:78     .text:0000000000000090 .LVL7
+     /tmp/ccocydxv.s:482    .debug_info:0000000000000000 .Ldebug_info0
+     /tmp/ccocydxv.s:467    .gcc_except_table:0000000000000000 .LLSDA15
+
+UNDEFINED SYMBOLS
+_Z9mem_allocm
+_Z8sem_openPP4_semj
+GAS LISTING /tmp/ccocydxv.s 			page 18
+
+
+_Z8sem_waitP4_sem
+_Z10sem_signalP4_sem
+_Z4putcc
+_Z11printStringPKc
+_Z8mem_freePv
+_Z9sem_closeP4_sem
+__gxx_personality_v0

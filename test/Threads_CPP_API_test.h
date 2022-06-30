@@ -69,7 +69,7 @@ void WorkerA::workerBodyA(void *arg) {
     }
     printString("A finished!\n");
     finishedA = true;
-    thread_exit();
+    //thread_exit();
     thread_dispatch();
 }
 
@@ -83,7 +83,7 @@ void WorkerB::workerBodyB(void *arg) {
     }
     printString("B finished!\n");
     finishedB = true;
-    thread_exit();
+    //thread_exit();
     thread_dispatch();
 }
 
@@ -111,7 +111,7 @@ void WorkerC::workerBodyC(void *arg) {
 
     printString("C finished!\n");
     finishedC = true;
-    thread_exit();
+    //thread_exit();
     thread_dispatch();
 }
 
@@ -134,7 +134,7 @@ void WorkerD::workerBodyD(void* arg) {
 
     printString("D finished!\n");
     finishedD = true;
-    thread_exit();
+    //thread_exit();
     thread_dispatch();
 }
 void body(void *p){

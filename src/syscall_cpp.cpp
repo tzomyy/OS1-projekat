@@ -4,7 +4,6 @@
 
 
 #include "../h/syscall_cpp.h"
-#include "../h/syscall_c.h"
 #include "../h/_thread.h"
 #include "../lib/hw.h"
 
@@ -64,9 +63,34 @@ Thread::Thread() {
 }
 
 
-/*void *Thread::operator new(size_t sz) {
-    return MemoryAllocator::getInstance()->mem_alloc((sz+
-                                               sizeof(MemoryAllocator::FullMem)+ MEM_BLOCK_SIZE - 1) /MEM_BLOCK_SIZE);
+Semaphore::Semaphore(unsigned int init) {
+    sem_open(&myHandle, init);
+}
 
-}*/
+Semaphore::~Semaphore() {
+    if (myHandle != nullptr) {
+        sem_close(myHandle);
+    }
+}
 
+int Semaphore::wait() {
+    if (myHandle != nullptr) {
+        return sem_wait(myHandle);
+    }
+    return -1;
+}
+
+int Semaphore::signal() {
+    if (myHandle != nullptr) {
+        return sem_signal(myHandle);
+    }
+    return -1;
+}
+
+char Console::getc() {
+    return ::getc();
+}
+
+void Console::putc(char c) {
+    ::putc(c);
+}

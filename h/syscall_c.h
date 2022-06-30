@@ -31,7 +31,21 @@ void thread_create_only(thread_t* handle,
 
 void thread_start(thread_t t);
 
-//void wrapperRun(void* p);
+class _sem;
+typedef _sem* sem_t;
+
+int sem_open(sem_t* handle, unsigned init);
+
+int sem_close(sem_t handle);
+
+int sem_wait(sem_t id);
+
+int sem_signal(sem_t id);
+
+const int EOF = -1;
+void putc(char);
+
+char getc();
 
 
 #endif //OS_PROJEKAT_SYSCALL_C_H

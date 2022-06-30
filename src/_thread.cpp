@@ -23,15 +23,13 @@ _thread *_thread::createThread(Body body, void* arg){
     ret->stack = static_cast<uint64 *>(body != nullptr ? _thread::operator new[](STACK_SIZE * sizeof(uint64)) : nullptr),
     ret->timeSlice = TIME_SLICE;
     ret->finished = false;
+    ret->blocked = false;
     ret->arg = arg;
     ret->context = {
             (uint64) &threadWrapper,
             ret->stack != nullptr ? (uint64) &(ret->stack[STACK_SIZE]): 0
     };
 
-    /*if(body != nullptr) {
-        Scheduler::put(ret);
-    }*/
     return ret;
 }
 
@@ -50,13 +48,13 @@ void _thread::yield()
 void _thread::dispatch()
 {
     _thread *old = running;
-    if (!old->isFinished()) { Scheduler::put(old); }
+    if (!old->isFinished() && !old->isBlocked()) { Scheduler::put(old); }
     running = Scheduler::get();
-    if (running->body == nullptr && Scheduler::head != nullptr){
+    /*if (running->body == nullptr && Scheduler::head != nullptr){
         _thread* tmp = running;
         running = Scheduler::get();
         Scheduler::put(tmp);
-    }
+    }*/
 
     _thread::contextSwitch(&old->context, &running->context);
 }

@@ -47,29 +47,18 @@ void userMain(void *);
 
 int main(){
 
-    /*MemoryAllocator::getInstance();
-    __putc('c');
-    thread_t thr[2];
-    thread_create(&thr[0], nullptr, nullptr);
-    thread_create(&thr[1], userMain, nullptr);*/
-
-    //Riscv::w_stvec((uint64) &trap);
-    //Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
-
-    //_thread *threads[2];
-
-    _thread *thread = _thread::createThread(nullptr, nullptr);
-    _thread::running = thread;
-
-    //threads[1] = _thread::createThread(userMain, nullptr);
-
     Riscv::w_stvec((uint64) &trap);
-    __asm__ volatile("ecall");
+    Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
-    //Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
+    _thread* threads[2];
 
+    threads[0] = _thread::createThread(nullptr, nullptr);
+    threads[1] = _thread::createThread(userMain, nullptr);
+    threads[1]->start();
 
-    while (!(thread->isFinished()))
+    _thread::running = threads[0];
+
+    while (!(threads[1]->isFinished()))
     {
         _thread::yield();
     }
