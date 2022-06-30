@@ -2,10 +2,6 @@
 // Created by os on 6/26/22.
 //
 
-//
-// Created by os on 6/21/22.
-//
-
 #include "../h/Blocked.h"
 
 

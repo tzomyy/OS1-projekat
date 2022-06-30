@@ -165,10 +165,6 @@ extern "C" void trapHandler(){
                 //__asm__ volatile("mv a0, %0" : :"r"(c));
                 break;
             }
-            default:
-                __asm__ volatile("csrw sepc, %0" : : "r"(&userMain));
-                Riscv::mc_sstatus(Riscv::SSTATUS_SPP);
-                return;
         }
         Riscv::w_sepc(sepc);
         Riscv::w_sstatus(status);

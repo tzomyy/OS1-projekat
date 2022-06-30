@@ -41,7 +41,7 @@ void _thread::yield()
     _thread::dispatch();
 
     Riscv::popRegisters();
-    //thread_dispatch();
+
 
 }
 

@@ -5,9 +5,6 @@
 #ifndef OS_PROJEKAT__THREAD_H
 #define OS_PROJEKAT__THREAD_H
 
-//
-// Created by os on 6/17/22.
-//
 
 #include "../lib/hw.h"
 #include "Scheduler.h"

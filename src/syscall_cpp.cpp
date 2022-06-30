@@ -42,6 +42,7 @@ Thread::Thread(void (*body)(void *), void *arg) {
 
 Thread::~Thread() {
     thread_exit();
+    mem_free(this);
 }
 
 int Thread::start() {
